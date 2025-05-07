@@ -31,7 +31,7 @@ metadata:
       - displayName: Generated Date Column Name
         attributeName: dateColumnName
         type: textBox
-        default: '"DATE_COL"'
+        default: '`DATE_COL`'
         isRequired: true
 
     - groupName: Additional Options
@@ -41,7 +41,6 @@ metadata:
         options:
         - table
         - view
-        - transient table
         isRequired: true
 
       - type: overrideSQLToggle
@@ -160,14 +159,14 @@ metadata:
       placement: beginning
       attributeName: isYearColumn
     - displayName: 'QUARTER_NUMBER'
-      transform: "TO_NUMBER(TO_CHAR(DATE_PART('Q',{{config.dateColumnName}})), '9')"
+      transform: "QUARTER({{config.dateColumnName}})"
       dataType: SMALLINT
       description: "Quarter Number of the year (1-4)"
       placement: beginning
       attributeName: isQuarterNumber
     - displayName: 'QUARTER'
-      transform: "TO_NUMBER(TO_CHAR({{config.dateColumnName}}, 'YYYY') || '0' || TO_CHAR(DATE_PART('Q',{{config.dateColumnName}})), '999999')"
-      dataType: SMALLINT
+      transform: "CAST(DATE_FORMAT({{config.dateColumnName}}, 'yyyy') || '0' || CAST(QUARTER({{config.dateColumnName}}) AS STRING) AS INT)"
+      dataType: INT
       description: "Year and the Quarter number in the format YYYYQQ"
       placement: beginning
       attributeName: isQuarter

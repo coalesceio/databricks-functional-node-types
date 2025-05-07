@@ -36,14 +36,7 @@ does not permit copying or modification for any other purpose.
         {{ stage('Create Date View', true, "sql", "create") }}
 
         CREATE OR REPLACE VIEW {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
-        (
-            {% for col in desiredState.columns %}
-                "{{ col.name }}"
-                {%- if col.description | length > 0 %} COMMENT '{{ col.description | escape }}'{% endif %}
-                {%- if not loop.last -%}, {% endif %}
-            {% endfor %}
-        )
-        {%- if desiredState.node.description | length > 0 %} COMMENT = '{{ desiredState.node.description | escape }}'{% endif %}
+        {%- if desiredState.node.description | length > 0 %} COMMENT  '{{ desiredState.node.description | escape }}'{% endif %}
         AS
 		WITH CTE_DATE_GENERATOR AS (
         SELECT DATEADD(DAY, SEQ4(), {{desiredState.config.startingDate }}) AS {{ desiredState.config.dateColumnName }}
@@ -55,14 +48,14 @@ does not permit copying or modification for any other purpose.
               DISTINCT
             {% endif %}
             {% for col in source.columns %}
-               {{ col.transform | replace('config','desiredState.config')  }} AS "{{ col.name }}"
+               {{ col.transform | replace('config','desiredState.config')  }} AS `{{ col.name }}`
                 {%- if not loop.last -%}, {% endif %}
             {% endfor %}
 
             FROM CTE_DATE_GENERATOR	
         {% endfor %}
       {%endif%}
-    {% elif desiredState.node.materializationType == 'table' or desiredState.node.materializationType == 'transient table'  %}
+    {% elif desiredState.node.materializationType == 'table' %}
         
         {# Figure out cluster key #}
         {% set nsVariables = namespace(finalClusterKey="") %}
@@ -114,7 +107,7 @@ does not permit copying or modification for any other purpose.
                CREATE OR REPLACE {{desiredState.node.materializationType}} {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
                 (
                 {% for col in desiredState.columns %}
-                    "{{ col.name }}" {{ col.dataType }}
+                    `{{ col.name }}` {{ col.dataType }}
                     {%- if not col.nullable %} NOT NULL
                         {%- if col.defaultValue | length > 0 %} DEFAULT {{ col.defaultValue }}{% endif %}
                     {% endif %}
@@ -140,7 +133,7 @@ does not permit copying or modification for any other purpose.
             CREATE OR REPLACE {{desiredState.node.materializationType}} {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
             (
                 {% for col in desiredState.columns %}
-                    "{{ col.name }}" {{ col.dataType }}
+                    `{{ col.name }}` {{ col.dataType }}
                     {%- if not col.nullable %} NOT NULL
                         {%- if col.defaultValue | length > 0 %} DEFAULT {{ col.defaultValue }}{% endif %}
                     {% endif %}

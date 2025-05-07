@@ -16,7 +16,7 @@ does not permit copying or modification for any other purpose.
 
 {% if config.truncateBefore %}
     {{ stage('Truncate Date Table') }}
-    TRUNCATE IF EXISTS {{ ref_no_link(node.location.name, node.name) }}
+    TRUNCATE TABLE  {{ ref_no_link(node.location.name, node.name) }}
 {% endif %}
 
 {% if config.insertZeroKey %}
@@ -30,7 +30,7 @@ does not permit copying or modification for any other purpose.
         	{% elif col.isSystemStartDate or col.isSystemEndDate or col.isSystemUpdateDate or col.isSystemCreateDate %}{{ get_source_transform(col) }}
         	{% elif col.isSystemVersion%}1
         	{% elif col.dataType[:3] | upper in ('NUM','INT','DEC','FLO') %}0
-        	{% elif col.dataType[:4] | upper in ('DATE','TIME') %}CAST(TO_TIMESTAMP( '{{config.insertZeroKeyDate}}', 'DD-MM-YYYY') AS {{ col.dataType }})
+        	{% elif col.dataType[:4] | upper in ('DATE','TIME') %}CAST(TO_TIMESTAMP( '{{config.insertZeroKeyDate}}', 'dd-MM-yyyy') AS {{ col.dataType }})
         	{% elif col.dataType[:3] | upper in ('VAR','CHA','STR','BIN') %}
         			{% if dtparams[0] and dtparams[0] | int <  config.insertZeroKeyStr | length  %}
         			SUBSTRING({{config.insertZeroKeyStr}},1,{{ dtparams[0] }})
@@ -40,17 +40,14 @@ does not permit copying or modification for any other purpose.
         	{% elif col.nullable %}NULL
         	{% else %}''
         	{% endif %}
-        	AS "{{ col.name }}"
+        	AS `{{ col.name }}`
         	{% if not loop.last %}, {% endif %}
         {% endfor %}
-        FROM   DUAL
+
         )AS SOURCE_ZERO
         ON 
         {% for col in columns if col.isSurrogateKey or col.isBusinessKey %}
-        CASE 
-        WHEN TRY_TO_DATE('{{config.insertZeroKeySurrogateKey}}', 'DD-MM-YYYY') IS NOT NULL THEN {{ node.name}}.{{ col.name}} = CAST(TO_DATE('{{config.insertZeroKeySurrogateKey}}', 'DD-MM-YYYY') AS DATE)
-        ELSE {{ node.name}}.{{ col.name}} = '{{config.insertZeroKeySurrogateKey}}'
-        END 				
+             {{ node.name}}.{{ col.name}} =  COALESCE( CAST(FROM_UNIXTIME(UNIX_TIMESTAMP('{{config.insertZeroKeySurrogateKey}}', 'dd-MM-yyyy')) AS DATE), DATE('{{config.insertZeroKeySurrogateKey}}'))		
 	    {% endfor -%}			
         WHEN MATCHED THEN UPDATE
         SET
@@ -78,12 +75,12 @@ does not permit copying or modification for any other purpose.
     MERGE INTO {{ ref_no_link(node.location.name, node.name) }} AS TGT
 	USING (
 	    WITH CTE_DATE_GENERATOR AS (
-        SELECT DATEADD(DAY, SEQ4(), {{config.startingDate }}) AS {{ config.dateColumnName }}
-        FROM TABLE(GENERATOR(ROWCOUNT=>{{ config.daysToGenerate }}))
+        SELECT DATEADD(DAY, id, {{config.startingDate }}) AS {{ config.dateColumnName }}
+        FROM RANGE(0, {{ config.daysToGenerate }})
     )
     SELECT
     {% for col in sources[0].columns %}
-        {{ col.transform }} AS "{{ col.name }}"
+        {{ col.transform }} AS `{{ col.name }}`
         {%- if not loop.last -%}, {% endif %}
     {% endfor %}
     FROM CTE_DATE_GENERATOR
@@ -91,24 +88,24 @@ does not permit copying or modification for any other purpose.
     ON 
     {% for col in sources[0].columns  if col.isBusinessKey -%}
     {% if not loop.first %} AND  {% endif %}
-    "TGT"."{{ col.name }}" = "SRC"."{{ col.name }}"
+    `TGT`.`{{ col.name }}` = `SRC`.`{{ col.name }}`
     {% endfor %}
     WHEN MATCHED THEN
     UPDATE SET
     {%- for col in sources[0].columns if not (col.isBusinessKey or col.isSurrogateKey or col.isSystemCreateDate) %}
-        "TGT"."{{ col.name }}" = "SRC"."{{ col.name }}"
+        `TGT`.`{{ col.name }}` = `SRC`.`{{ col.name }}`
         {% if not loop.last %}, {% endif %}
     {% endfor -%}
     WHEN NOT MATCHED THEN 
 	INSERT    (
     {% for col in sources[0].columns %}
-        "{{ col.name }}"
+        `{{ col.name }}`
         {%- if not loop.last -%},{% endif %}
     {% endfor %}
     )
     VALUES(
     {% for col in sources[0].columns %}
-    "SRC"."{{ col.name }}" 
+    `SRC`.`{{ col.name }}`
     {%- if not loop.last -%}, {% endif %}
     {% endfor %}
     )
