@@ -39,8 +39,8 @@ does not permit copying or modification for any other purpose.
         {%- if desiredState.node.description | length > 0 %} COMMENT  '{{ desiredState.node.description | escape }}'{% endif %}
         AS
 		WITH CTE_DATE_GENERATOR AS (
-        SELECT DATEADD(DAY, SEQ4(), {{desiredState.config.startingDate }}) AS {{ desiredState.config.dateColumnName }}
-        FROM TABLE(GENERATOR(ROWCOUNT=>{{ desiredState.config.daysToGenerate }}))
+           SELECT DATEADD(DAY, id, {{config.startingDate }}) AS {{ config.dateColumnName }}
+           FROM RANGE(0, {{ config.daysToGenerate }}) 
 		)
         {% for source in desiredState.sources %}
             SELECT
