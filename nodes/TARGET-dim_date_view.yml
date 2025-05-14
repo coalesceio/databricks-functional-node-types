@@ -11,7 +11,7 @@ operation:
     insertZeroKeySurrogateKey: ""
     postSQL: ""
     preSQL: ""
-    startingDate: DATEADD(DAY, -730, CURRENT_DATE)
+    startingDate: DATEADD(DAY, -365, CURRENT_DATE)
     testsEnabled: false
     truncateBefore: true
   database: ""
@@ -141,7 +141,7 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
-            transform: TO_CHAR({{ config.dateColumnName }}, 'Dy')
+            transform: DAYNAME({{ config.dateColumnName }})
       - acceptedValues:
           strictMatch: true
           values: []
@@ -226,7 +226,7 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
-            transform: CASE WHEN TO_CHAR({{config.dateColumnName }}, 'Dy') IN ('Sat','Sun') THEN 'N' ELSE 'Y' END
+            transform: CASE WHEN DAYNAME({{config.dateColumnName }}) IN ('Sat','Sun') THEN 'N' ELSE 'Y' END
       - acceptedValues:
           strictMatch: true
           values: []
@@ -243,7 +243,7 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
-            transform: CASE WHEN TO_CHAR({{config.dateColumnName }}, 'Dy') IN ('Sat','Sun') THEN 'Y' ELSE 'N' END
+            transform: CASE WHEN DAYNAME({{config.dateColumnName }}) IN ('Sat','Sun') THEN 'Y' ELSE 'N' END
       - acceptedValues:
           strictMatch: true
           values: []

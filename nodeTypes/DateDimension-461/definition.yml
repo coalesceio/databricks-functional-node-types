@@ -141,7 +141,7 @@ metadata:
       placement: beginning
       attributeName: isDayOfWeek
     - displayName: 'DAY_NAME_OF_WEEK'
-      transform: "TO_CHAR({{ config.dateColumnName }}, 'Dy')"
+      transform: "DAYNAME({{ config.dateColumnName }})"
       dataType: VARCHAR(9)
       description: "Day of the Week in format DDD"
       placement: beginning

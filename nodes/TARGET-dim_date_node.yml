@@ -3,7 +3,7 @@ id: d59ded1d-e96b-4cc0-ac4e-06640278a314
 name: dim_date_node
 operation:
   config:
-    dateColumnName: "`DATE_COL`"
+    dateColumnName: "`DATE_COLUMN`"
     daysToGenerate: "2000"
     insertZeroKey: true
     insertZeroKeyDate: 01-01-1900
@@ -11,7 +11,7 @@ operation:
     insertZeroKeySurrogateKey: 01-01-1900
     postSQL: ""
     preSQL: ""
-    startingDate: DATEADD(DAY, -730, CURRENT_DATE)
+    startingDate: DATEADD(DAY, -365, CURRENT_DATE)
     testsEnabled: false
     truncateBefore: true
   database: ""
@@ -51,6 +51,7 @@ operation:
         dataType: SMALLINT
         defaultValue: ""
         description: Year in the format YYYY
+        isBusinessKey: true
         isYear: true
         name: YEAR
         nullable: true
@@ -141,7 +142,7 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
-            transform: TO_CHAR({{ config.dateColumnName }}, 'Dy')
+            transform: DAYNAME({{ config.dateColumnName }})
       - acceptedValues:
           strictMatch: true
           values: []
@@ -226,7 +227,7 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
-            transform: CASE WHEN TO_CHAR({{config.dateColumnName }}, 'Dy') IN ('Sat','Sun') THEN 'N' ELSE 'Y' END
+            transform: CASE WHEN DAYNAME({{config.dateColumnName }}) IN ('Sat','Sun') THEN 'N' ELSE 'Y' END
       - acceptedValues:
           strictMatch: true
           values: []
@@ -243,7 +244,7 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
-            transform: CASE WHEN TO_CHAR({{config.dateColumnName }}, 'Dy') IN ('Sat','Sun') THEN 'Y' ELSE 'N' END
+            transform: CASE WHEN DAYNAME({{config.dateColumnName }}) IN ('Sat','Sun') THEN 'Y' ELSE 'N' END
       - acceptedValues:
           strictMatch: true
           values: []

@@ -14,12 +14,12 @@ does not permit copying or modification for any other purpose.
     {{ config.preSQL }}
 {% endif %}
 
-{% if config.truncateBefore %}
+{% if config.truncateBefore and node.materializationType != 'view'%}
     {{ stage('Truncate Date Table') }}
     TRUNCATE TABLE  {{ ref_no_link(node.location.name, node.name) }}
 {% endif %}
 
-{% if config.insertZeroKey %}
+{% if config.insertZeroKey and node.materializationType != 'view' %}
         {{ stage('Insert Zero Record') }}
         MERGE INTO {{ ref_no_link(node.location.name, node.name) }}USING
         (SELECT 
@@ -47,7 +47,8 @@ does not permit copying or modification for any other purpose.
         )AS SOURCE_ZERO
         ON 
         {% for col in columns if col.isSurrogateKey or col.isBusinessKey %}
-             {{ node.name}}.{{ col.name}} =  COALESCE( CAST(FROM_UNIXTIME(UNIX_TIMESTAMP('{{config.insertZeroKeySurrogateKey}}', 'dd-MM-yyyy')) AS DATE), DATE('{{config.insertZeroKeySurrogateKey}}'))		
+             {{ node.name}}.{{ col.name}} =  COALESCE( CAST(FROM_UNIXTIME(UNIX_TIMESTAMP('{{config.insertZeroKeySurrogateKey}}', 'dd-MM-yyyy')) AS DATE), DATE('{{config.insertZeroKeySurrogateKey}}'))	
+             {% if not loop.last %} AND {% endif %}	
 	    {% endfor -%}			
         WHEN MATCHED THEN UPDATE
         SET
@@ -70,13 +71,15 @@ does not permit copying or modification for any other purpose.
         {% endfor -%}
         )
 {% endif %}	
+
+{%if node.materializationType != 'view'%}
 		
     {{ stage('Insert ' + sources[0].name | string ) }}
     MERGE INTO {{ ref_no_link(node.location.name, node.name) }} AS TGT
 	USING (
 	    WITH CTE_DATE_GENERATOR AS (
-        SELECT DATEADD(DAY, id, {{config.startingDate }}) AS {{ config.dateColumnName }}
-        FROM RANGE(0, {{ config.daysToGenerate }})
+           SELECT DATE_FORMAT(DATEADD(DAY, id, {{config.startingDate }}),'yyyy-MM-dd') AS {{config.dateColumnName }}
+           FROM RANGE(0, {{config.daysToGenerate }}) 
     )
     SELECT
     {% for col in sources[0].columns %}
@@ -109,6 +112,7 @@ does not permit copying or modification for any other purpose.
     {%- if not loop.last -%}, {% endif %}
     {% endfor %}
     )
+{%endif%}
 
 {% if config.postSQL %}
     {{ stage('Post-SQL') }}
