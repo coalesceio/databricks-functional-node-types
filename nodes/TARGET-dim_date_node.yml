@@ -5,7 +5,7 @@ operation:
   config:
     dateColumnName: "`DATE_COLUMN`"
     daysToGenerate: "2000"
-    insertZeroKey: true
+    insertZeroKey: false
     insertZeroKeyDate: 01-01-1900
     insertZeroKeyStr: NA
     insertZeroKeySurrogateKey: 01-01-1900
