@@ -170,8 +170,8 @@ does not permit copying or modification for any other purpose.
             {# Change table description #}
             {% if (nsVariables.nodeCommentTest == false or currentState.node.description != desiredState.node.description) %}
                  {{ stage('Change table description', true, "sql", "alter") }}
-                 ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
-                SET COMMENT = '{{ desiredState.node.description | escape }}'
+                 COMMENT ON TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
+                 IS '{{ desiredState.node.description | escape }}'
             {% endif %}
 
 

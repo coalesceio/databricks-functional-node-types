@@ -1,6 +1,6 @@
 fileVersion: 1
-id: d59ded1d-e96b-4cc0-ac4e-06640278a314
-name: dim_date_node
+id: 045e0edf-e225-4bae-af43-853263dd01e6
+name: dim_date_node12
 operation:
   config:
     dateColumnName: "`DATE_COLUMN`"
@@ -16,7 +16,7 @@ operation:
     truncateBefore: true
   database: ""
   deployEnabled: true
-  description: Date dimension test
+  description: Date Dimension table
   isMultisource: false
   locationName: TARGET
   materializationType: table
@@ -28,8 +28,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 042dfbd3-015f-476a-a540-c9fa140cf149
-          stepCounter: d59ded1d-e96b-4cc0-ac4e-06640278a314
+          columnCounter: a8df4b18-c8de-4142-b62d-980821841cfa
+          stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
         config: {}
         dataType: DATE
         defaultValue: ""
@@ -45,8 +45,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 2423eba1-2001-4353-895f-438de7af1687
-          stepCounter: d59ded1d-e96b-4cc0-ac4e-06640278a314
+          columnCounter: d040a047-1a8f-4833-8dfb-9f06bd75073d
+          stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
         config: {}
         dataType: INT
         defaultValue: ""
@@ -63,14 +63,14 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 15d0ac34-4168-47fb-93fa-8a2c8f2eff42
-          stepCounter: d59ded1d-e96b-4cc0-ac4e-06640278a314
+          columnCounter: 86fcfeb0-4e48-4984-a296-91b63829cb44
+          stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
         config: {}
-        dataType: SMALLINT
+        dataType: INT
         defaultValue: ""
         description: Month in the format MM
         isMonth: true
-        name: MONTH
+        name: MONTH1
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
@@ -80,8 +80,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 44f0ac4f-86eb-4cae-883f-fad8e26d72a7
-          stepCounter: d59ded1d-e96b-4cc0-ac4e-06640278a314
+          columnCounter: a3a70930-3b56-4cf1-ae1c-44b0f590021e
+          stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
         config: {}
         dataType: CHAR(3)
         defaultValue: ""
@@ -97,8 +97,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 14c5af52-7976-4ba4-9715-80f89dc28e2c
-          stepCounter: d59ded1d-e96b-4cc0-ac4e-06640278a314
+          columnCounter: b57a50ec-3487-419f-b3f6-83406f9c5fec
+          stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
         config: {}
         dataType: SMALLINT
         defaultValue: ""
@@ -114,8 +114,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: c7309fea-9142-4694-8523-0d815a982851
-          stepCounter: d59ded1d-e96b-4cc0-ac4e-06640278a314
+          columnCounter: ce37968b-33f3-4403-af11-14f1d146dcd9
+          stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
         config: {}
         dataType: VARCHAR(9)
         defaultValue: ""
@@ -131,8 +131,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 6751c200-655e-4a77-9ad8-366e48a623ca
-          stepCounter: d59ded1d-e96b-4cc0-ac4e-06640278a314
+          columnCounter: 2558965b-611a-46fb-881f-4d48a50f7b49
+          stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
         config: {}
         dataType: VARCHAR(9)
         defaultValue: ""
@@ -148,8 +148,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 208d6591-6ebc-4a13-9c32-04567c46de45
-          stepCounter: d59ded1d-e96b-4cc0-ac4e-06640278a314
+          columnCounter: 3f75c1c1-cb22-4efd-88b9-eb74ef021c81
+          stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
         config: {}
         dataType: SMALLINT
         defaultValue: ""
@@ -165,8 +165,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 48194fe8-532e-4cdb-a400-8e9037e2244d
-          stepCounter: d59ded1d-e96b-4cc0-ac4e-06640278a314
+          columnCounter: 1283b204-5611-4e86-9dc1-a520e2147af0
+          stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
         config: {}
         dataType: SMALLINT
         defaultValue: ""
@@ -182,8 +182,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 11560e1b-657a-4ad0-b398-80808f14511f
-          stepCounter: d59ded1d-e96b-4cc0-ac4e-06640278a314
+          columnCounter: a8d27147-d332-4b2b-87c3-05474f505ea5
+          stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
         config: {}
         dataType: SMALLINT
         defaultValue: ""
@@ -194,13 +194,25 @@ operation:
         sourceColumnReferences:
           - columnReferences: []
             transform: QUARTER({{config.dateColumnName}})
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 812c4913-abb6-46b1-849a-e0ad91f6770a
+          stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
+        config: {}
+        dataType: SMALLINT
+        description: Quarter Number of the year (1-4)
+        name: QUARTER_NUMBER1
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: QUARTER({{config.dateColumnName}})
       - acceptedValues:
           strictMatch: true
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: dc04fdf7-f161-4bea-9fc3-eb7d7014cc01
-          stepCounter: d59ded1d-e96b-4cc0-ac4e-06640278a314
+          columnCounter: 0dbc3e0f-36f2-40b7-b3de-3c3d93d4bb4e
+          stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
         config: {}
         dataType: INT
         defaultValue: ""
@@ -216,8 +228,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: e1367b66-7a66-4ab0-bded-faa0f77ce545
-          stepCounter: d59ded1d-e96b-4cc0-ac4e-06640278a314
+          columnCounter: 9b1affa7-4544-436e-8357-928753dea805
+          stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
         config: {}
         dataType: VARCHAR(9)
         defaultValue: ""
@@ -233,25 +245,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: a8f5d354-f53d-4737-a2ba-d92004498ebd
-          stepCounter: d59ded1d-e96b-4cc0-ac4e-06640278a314
-        config: {}
-        dataType: VARCHAR(9)
-        defaultValue: ""
-        description: Flag to check weekend
-        isFlagWeekEnd: true
-        name: FLAG_WEEK_END
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: CASE WHEN DAYNAME({{config.dateColumnName }}) IN ('Sat','Sun') THEN 'Y' ELSE 'N' END
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 36c43760-8e21-40d3-a43e-813177952b6c
-          stepCounter: d59ded1d-e96b-4cc0-ac4e-06640278a314
+          columnCounter: 337931b2-7e17-46df-a638-01156d02caec
+          stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
         config: {}
         dataType: TIMESTAMP
         defaultValue: ""
@@ -267,8 +262,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 1cb41077-4105-4cf0-a2ef-c50b75ec0f33
-          stepCounter: d59ded1d-e96b-4cc0-ac4e-06640278a314
+          columnCounter: 11af7a17-31b5-4251-b600-d812fd62600b
+          stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
         config: {}
         dataType: TIMESTAMP
         defaultValue: ""
@@ -288,9 +283,9 @@ operation:
         dependencies: []
         join:
           joinCondition: ""
-        name: dim_date_node
+        name: dim_date_node12
         noLinkRefs: []
-  name: dim_date_node
+  name: dim_date_node12
   overrideSQL: false
   schema: ""
   sqlType: "461"
