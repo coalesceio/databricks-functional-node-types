@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 045e0edf-e225-4bae-af43-853263dd01e6
-name: dim_date_node1
+name: dim_date_node12
 operation:
   config:
     dateColumnName: "`DATE_COLUMN`"
@@ -16,7 +16,7 @@ operation:
     truncateBefore: true
   database: ""
   deployEnabled: true
-  description: ""
+  description: Date Dimension table
   isMultisource: false
   locationName: TARGET
   materializationType: table
@@ -66,11 +66,11 @@ operation:
           columnCounter: 86fcfeb0-4e48-4984-a296-91b63829cb44
           stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
         config: {}
-        dataType: SMALLINT
+        dataType: INT
         defaultValue: ""
         description: Month in the format MM
         isMonth: true
-        name: MONTH
+        name: MONTH1
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
@@ -194,6 +194,18 @@ operation:
         sourceColumnReferences:
           - columnReferences: []
             transform: QUARTER({{config.dateColumnName}})
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 812c4913-abb6-46b1-849a-e0ad91f6770a
+          stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
+        config: {}
+        dataType: SMALLINT
+        description: Quarter Number of the year (1-4)
+        name: QUARTER_NUMBER1
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: QUARTER({{config.dateColumnName}})
       - acceptedValues:
           strictMatch: true
           values: []
@@ -228,23 +240,6 @@ operation:
         sourceColumnReferences:
           - columnReferences: []
             transform: CASE WHEN DAYNAME({{config.dateColumnName }}) IN ('Sat','Sun') THEN 'N' ELSE 'Y' END
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: a9c08a70-06a8-4ddf-abc2-f8115b9ca99a
-          stepCounter: 045e0edf-e225-4bae-af43-853263dd01e6
-        config: {}
-        dataType: VARCHAR(9)
-        defaultValue: ""
-        description: Flag to check weekend
-        isFlagWeekEnd: true
-        name: FLAG_WEEK_END
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: CASE WHEN DAYNAME({{config.dateColumnName }}) IN ('Sat','Sun') THEN 'Y' ELSE 'N' END
       - acceptedValues:
           strictMatch: true
           values: []
@@ -288,9 +283,9 @@ operation:
         dependencies: []
         join:
           joinCondition: ""
-        name: dim_date_node1
+        name: dim_date_node12
         noLinkRefs: []
-  name: dim_date_node1
+  name: dim_date_node12
   overrideSQL: false
   schema: ""
   sqlType: "461"

@@ -89,7 +89,7 @@ does not permit copying or modification for any other purpose.
                     {%- if not loop.last -%}, {% endif %}
                 {% endfor %}
                 )
-               {%- if desiredState.node.description | length > 0 %} COMMENT = '{{ desiredState.node.description | escape }}'{% endif %}
+               {%- if desiredState.node.description | length > 0 %} COMMENT  '{{ desiredState.node.description | escape }}'{% endif %}
                 TBLPROPERTIES('delta.columnMapping.mode' = 'name')
 
         {% endif %}
@@ -107,8 +107,9 @@ does not permit copying or modification for any other purpose.
                     {%- if not loop.last -%}, {% endif %}
                 {% endfor %}
             )
-            {%- if desiredState.node.description | length > 0 %} COMMENT = '{{ desiredState.node.description | escape }}'{% endif %}
-
+            {%- if desiredState.node.description | length > 0 %} COMMENT '{{ desiredState.node.description | escape }}'{% endif %}
+            TBLPROPERTIES('delta.columnMapping.mode' = 'name')
+            
         {% elif currentState != undefined and currentState.node.materializationType == desiredState.node.materializationType %}
 
             {# Change Node Name or Change Storage Location #}
