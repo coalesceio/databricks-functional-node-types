@@ -35,8 +35,15 @@ does not permit copying or modification for any other purpose.
       {% if currentState == undefined or currentState != desiredState %}
         {{ stage('Create Date View', true, "sql", "create") }}
 
-        CREATE OR REPLACE VIEW {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
-        {%- if desiredState.node.description | length > 0 %} COMMENT  '{{ desiredState.node.description | escape }}'{% endif %}
+           CREATE OR REPLACE VIEW {{ ref_no_link(node.location.name, node.name) }}
+    (
+        {% for col in desiredState.columns %}
+            `{{ col.name }}`
+            {%- if col.description | length > 0 %} COMMENT '{{ col.description | escape }}'{% endif %}
+            {%- if not loop.last -%}, {% endif %}
+        {% endfor %}
+    )
+    {%- if desiredState.node.description | length > 0 %} COMMENT  '{{ desiredState.node.description | escape }}'{% endif %}
         AS
 		WITH CTE_DATE_GENERATOR AS (
            SELECT DATE_FORMAT(DATEADD(DAY, id, {{desiredState.config.startingDate }}),'yyyy-MM-dd') AS {{ desiredState.config.dateColumnName }}
@@ -83,7 +90,8 @@ does not permit copying or modification for any other purpose.
                 {% endfor %}
                 )
                {%- if desiredState.node.description | length > 0 %} COMMENT = '{{ desiredState.node.description | escape }}'{% endif %}
-                
+                TBLPROPERTIES('delta.columnMapping.mode' = 'name')
+
         {% endif %}
 
         {% if currentState == undefined or currentState.storageLocations | length == 0  %}
