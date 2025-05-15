@@ -48,12 +48,12 @@ operation:
           columnCounter: 2423eba1-2001-4353-895f-438de7af1687
           stepCounter: d59ded1d-e96b-4cc0-ac4e-06640278a314
         config: {}
-        dataType: SMALLINT
+        dataType: INT
         defaultValue: ""
         description: Year in the format YYYY
         isBusinessKey: true
         isYear: true
-        name: YEAR
+        name: YEAR1
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
