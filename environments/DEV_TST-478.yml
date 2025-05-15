@@ -1,0 +1,11 @@
+fileVersion: 1
+id: "478"
+mappingDefinitions:
+  SOURCE:
+    database: coalesce
+    schema: default
+  TARGET:
+    database: coalesce
+    schema: target_dev
+name: DEV_TST
+type: Environment
