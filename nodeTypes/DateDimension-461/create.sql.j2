@@ -55,41 +55,8 @@ does not permit copying or modification for any other purpose.
             FROM CTE_DATE_GENERATOR	
         {% endfor %}
       {%endif%}
+
     {% elif desiredState.node.materializationType == 'table' %}
-        
-        {# Figure out cluster key #}
-        {% set nsVariables = namespace(finalClusterKey="") %}
-        {% if desiredState.config.clusterKey == true %}
-            {% if desiredState.config.clusterKeyExpressions == true %}
-                {% set column, expression = desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='columnNameExpressions.name') | list, desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='sqlExpression') | list %}
-
-                {%- set nsVariables = namespace(clusterValues=[]) %}
-
-                {% for r in column %}
-                    {% if expression[loop.index0] == "" %}
-                        {% set nsVariables.clusterValues = nsVariables.clusterValues + ['"'+r+'"'] %}
-                    {% else %}
-                        {% set nsVariables.clusterValues = nsVariables.clusterValues + [expression[loop.index0]] %}
-                    {% endif %}
-                {% endfor %}
-
-                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
-
-            {% else %}
-
-                {% set column = desiredState.config.clusterKeyConfig.get('items') | map(attribute='columnName.name') | list %}
-
-                {%- set nsVariables = namespace(clusterValues=[]) %}
-
-                {% for r in column %}
-                    {% set nsVariables.clusterValues = nsVariables.clusterValues + ['"'+r+'"'] %}
-                {% endfor %}
-
-                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
-
-            {% endif %}
-        {% endif %}
-
 
         {% if currentState != undefined and currentState.node.materializationType != desiredState.node.materializationType %}
 
@@ -116,15 +83,6 @@ does not permit copying or modification for any other purpose.
                 {% endfor %}
                 )
                {%- if desiredState.node.description | length > 0 %} COMMENT = '{{ desiredState.node.description | escape }}'{% endif %}
-
-               {% if desiredState.config.clusterKey == true %}
-                  {{ stage('Apply Table Clustering', true, "sql", "create") }}
-                 ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} {{ nsVariables.finalClusterKey }}
-
-                   {{ stage('Resume Recluster Table', true, "sql", "create") }}
-                  ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} RESUME RECLUSTER
-
-               {% endif %}
                 
         {% endif %}
 
@@ -142,14 +100,6 @@ does not permit copying or modification for any other purpose.
                 {% endfor %}
             )
             {%- if desiredState.node.description | length > 0 %} COMMENT = '{{ desiredState.node.description | escape }}'{% endif %}
-
-        {% if desiredState.config.clusterKey == true %}
-            {{ stage('Apply Table Clustering', true, "sql", "create") }}
-            ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} {{ nsVariables.finalClusterKey }}
-
-            {{ stage('Resume Recluster Table', true, "sql", "create") }}
-            ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} RESUME RECLUSTER
-        {% endif %}
 
         {% elif currentState != undefined and currentState.node.materializationType == desiredState.node.materializationType %}
 
@@ -204,7 +154,7 @@ does not permit copying or modification for any other purpose.
                 {% set cdb = currentState.storageLocations | selectattr('name', 'equalto', srcSchName) | map(attribute='database') | first %}
                 {% set csch = currentState.storageLocations | selectattr('name', 'equalto', srcSchName) | map(attribute='schema') | first %}
 
-                ALTER TABLE  "{{cdb}}"."{{csch}}"."{{currentState.node.name}}"
+                ALTER TABLE  `{{cdb}}`.`{{csch}}`.`{{currentState.node.name}}`
                 RENAME TO   {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
             {% endif %}
 
@@ -230,7 +180,7 @@ does not permit copying or modification for any other purpose.
                     {% else %}
                         , 
                     {% endif %}
-                    "{{ dropCurCol.name }}"
+                    `{{ dropCurCol.name }}`
                 {% endif %}
             {% endfor %}
 
@@ -247,7 +197,7 @@ does not permit copying or modification for any other purpose.
                     {% else %}
                         ,
                     {% endif %}
-                        "{{ addDesCol.name }}" {{ addDesCol.dataType }}
+                        `{{ addDesCol.name }}` {{ addDesCol.dataType }}
                         {%- if not addDesCol.nullable %} NOT NULL
                             {%- if addDesCol.defaultValue | length > 0 %} DEFAULT {{ addDesCol.defaultValue }}{% endif %}
                         {% endif %}
@@ -262,8 +212,8 @@ does not permit copying or modification for any other purpose.
                     {% if renameCurCol.name != desiredColumnName %}
                         {{ stage('Rename Column ' + renameCurCol.name, true, "sql", "alter") }}
                         ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
-                        RENAME COLUMN "{{ renameCurCol.name }}"
-                        TO "{{ desiredColumnName }}"
+                        RENAME COLUMN `{{ renameCurCol.name }}`
+                        TO `{{ desiredColumnName }}`
                     {% endif %}
                 {% endif %}
             {% endfor %}
@@ -301,13 +251,13 @@ does not permit copying or modification for any other purpose.
                         {% endif %}
                         {% if datatypeTest == false %}
                             {% if nsVariables.colchanges > 1 %},{% endif %}
-                            COLUMN "{{ desiredColumnName }}"
+                            COLUMN `{{ desiredColumnName }}`
                             SET DATA TYPE {{ desiredDatatype }}
                             {% set nsVariables.colchanges = nsVariables.colchanges + 1 %}
                         {% endif %}
                         {% if nullableTest == false %}
                             {% if nsVariables.colchanges > 1 %},{% endif %}
-                            COLUMN "{{ desiredColumnName }}"
+                            COLUMN `{{ desiredColumnName }}`
                             {% if currentNullable == true %}
                                 SET
                             {% else %}
@@ -318,7 +268,7 @@ does not permit copying or modification for any other purpose.
                         {% endif %}
                         {% if descriptionTest == false %}
                             {% if nsVariables.colchanges > 1 %},{% endif %}
-                            COLUMN "{{ desiredColumnName }}"
+                            COLUMN `{{ desiredColumnName }}`
                             COMMENT '{{ desiredDescription |escape }}'
                             {% set nsVariables.colchanges = nsVariables.colchanges + 1 %}
                         {% endif %}
@@ -339,50 +289,6 @@ does not permit copying or modification for any other purpose.
                 {% endif %}
             {% endfor %}
             
-            {# Figure out cluster key #}
-            {% set nsVariables = namespace(finalClusterKey="") %}
-            {% if clusterTest == false %}
-                {% if desiredState.config.clusterKeyExpressions == true %}
-                    {% set column, expression = desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='columnNameExpressions.name') | list, desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='sqlExpression') | list %}
-
-                    {%- set nsVariables = namespace(clusterValues=[]) %}
-
-                    {% for r in column %}
-                        {% if expression[loop.index0] == "" %}
-                            {% set nsVariables.clusterValues = nsVariables.clusterValues + ['"'+r+'"'] %}
-                        {% else %}
-                            {% set nsVariables.clusterValues = nsVariables.clusterValues + [expression[loop.index0]] %}
-                        {% endif %}
-                    {% endfor %}
-
-                    {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
-
-                {% elif desiredState.config.clusterKey == true %}
-
-                    {% set column = desiredState.config.clusterKeyConfig.get('items') | map(attribute='columnName.name') | list %}
-
-                    {%- set nsVariables = namespace(clusterValues=[]) %}
-
-                    {% for r in column %}
-                        {% set nsVariables.clusterValues = nsVariables.clusterValues + ['"'+r+'"'] %}
-                    {% endfor %}
-
-                    {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
-                
-                {% else %}
-
-                    {% set nsVariables.finalClusterKey = 'DROP CLUSTERING KEY' %}
-
-                {% endif %}
-
-                {{ stage('Recluster TABLE', true, "sql", "create") }}
-                ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
-                {{ nsVariables.finalClusterKey }}
-
-            {% endif %}
-
-        {% endif %}
-
 
     {% endif %}
 
