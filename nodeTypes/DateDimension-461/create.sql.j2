@@ -255,7 +255,7 @@ does not permit copying or modification for any other purpose.
                         {% if nsVariables.colchanges == 1 %}
                             {{ stage('Change Column Attributes', true, "sql", "alter") }}
                             ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
-                            MODIFY
+                            ALTER
                         {% endif %}
                         {% if datatypeTest == false %}
                             {% if nsVariables.colchanges > 1 %},{% endif %}
