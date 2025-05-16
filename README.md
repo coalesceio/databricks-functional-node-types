@@ -37,7 +37,7 @@ The Date Dimension node type has two configuration groups:
 | **Setting** | **Description** |
 |---------|-------------|
 | **Starting Date**| A date from where the date values should be added in the date table.Default is :DATEADD(DAY, -730, CURRENT_DATE)|
-| **Number of Days To Generate ** | Numeric value indicating how many days' records should be generated from the Starting Date. |
+| **Number of Days To Generate** | Numeric value indicating how many days' records should be generated from the Starting Date. |
 | **Generated Date Column Name** |Metadata column name used in the SQL generated for inserting records into the table. |
 
 #### Additional Options
@@ -46,7 +46,6 @@ You can create the node as:
 
 * [Table](#date-table-create-as-table)
 * [View](#date-table-create-as-view)
-* [Transient Table](#date-table-create-as-transient-table)
 
 ##### Date Dimension Create as Table
 
@@ -71,22 +70,6 @@ You can create the node as:
 | **Enable tests** | Toggle: True/False<br/>Determines if tests are enabled |
 | **Override Create SQL** | Toggle: True/False<br/>**True**: View is created by overriding the SQL<br/>**False**: Nodetype defined create view SQL will execute |
 
-##### Date Dimension Create as Transient Table
-
-| **Setting** | **Description** |
-|---------|-------------|
-| **Create As**| Transient Table|
-| **Truncate Before** | Toggle: True/False<br/>This determines whether a table will be overwritten each time a task executes. **True**: Uses INSERT OVERWRITE<br/>**False**: Uses INSERT to append data |
-| **Insert Zero Key Record** | Toggle: True/False<br/>Insert Zero Key Record to Dimention if enabled |
-| **Business key** | Required column for Type 1 Dimensions |
-| **Default String Value** | If Insert Zero Key Record toggle is True then add a default value for columns with datatype string |
-| **Default Surrogate Key Value** | If Insert Zero Key Record toggle is True then add a default value for surrogate key column|
-| **Default Date Value (Date Format DD-MM-YYYY)** | If Insert Zero Key Record toggle is True then add a default value for date key column in the format DD-MM-YYYY|
-| **Enable tests** | Toggle: True/False<br/>Determines if tests are enabled |
-| **Pre-SQL**| SQL to execute before data insert operation |
-| **Post-SQL** | SQL to execute after data insert operation |
-
-
 ### Date Dimension Joins
 
 Join conditions and other clauses can be specified in the join space next to mapping of columns in the UI.
@@ -110,9 +93,9 @@ When deployed for the first time into an environment the Date node of materializ
 
 #### Date Dimension Redeployment
 
-After the Date node with materialization type table/transient table/view has been deployed for the first time into a target environment, subsequent deployments may result in either altering the Date Table or recreating the Date table.
+After the Date node with materialization type table/view has been deployed for the first time into a target environment, subsequent deployments may result in either altering the Date Table/view or recreating the Date table/view.
 
-#### Altering the Date Table and Transient Tables
+#### Altering the Date Table 
 
 A few types of column or table changes will result in an ALTER statement to modify the Persistent Table in the target environment, whether these changes are made individually or all together:
 
@@ -141,13 +124,12 @@ The following stages are executed:
 
 | **Change** | **Stages Executed** |
 |------------|-------------------|
-| **View to table/transient table** |  Drop view <br/> Create or Replace Date table/transient table |
-| **Table/transient table to View** |  Drop table/transient table<br/> Create Date view |
-| **Table to transient table or vice versa** |  Drop table/transient table<br/> Create or Replace Date table/transient table |
+| **View to table** |  Drop view <br/> Create or Replace Date table/transient table |
+| **Table to View** |  Drop table/transient table<br/> Create Date view |
 
 > 📘 **Materialization Date Dimension**
 >
-> When the materialization type of Date node is changed from table/transient table to View and use Override Create SQL for view creation. This ensures that the following change is made in the stage function in Create SQL tab so that the order of deployment is maintained.
+> When the materialization type of Date node is changed from table to View and use Override Create SQL for view creation. This ensures that the following change is made in the stage function in Create SQL tab so that the order of deployment is maintained.
 
 ![CreateSQL](https://github.com/coalesceio/Coalesce-Base-Node-Types---Advanced-Deploy/assets/7216836/0296abf8-0747-4ae8-8478-0782e5e2e545)
 
@@ -157,7 +139,7 @@ If the nodes are redeployed with no changes compared to previous deployment,then
 
 ### Date Dimension Deploy Undeployment
 
-If a Date Dimension Node of materialization type table/view/transient table are deleted from a Datespace, that Datespace is committed to Git and that commit deployed to a higher level environment then the DateTable in the target environment will be dropped.
+If a Date Dimension Node of materialization type table/view are deleted from a Datespace, that Datespace is committed to Git and that commit deployed to a higher level environment then the DateTable in the target environment will be dropped.
 
 This is executed in below stage:
 
