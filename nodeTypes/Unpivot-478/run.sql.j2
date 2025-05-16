@@ -1,0 +1,84 @@
+{#
+    Copyright (c) 2023 Coalesce. All rights reserved.
+This script and its associated documentation are confidential and proprietary to Coalesce.
+Unauthorized reproduction, distribution, or disclosure of this material is strictly prohibited.
+Coalesce permits you to copy and modify this script for the purposes of using with Coalsce but
+does not permit copying or modification for any other purpose.  
+#}
+{# == Node Type Version        : 1  == #}
+{# == Node Type Name           : UNPIVOT NODE == #}
+{# == Node Type Description    : This node transforms columns to rows. == #}
+{#Release date:20250122 Version:3.0.0#}
+
+{% set source = sources[0] %}
+{%set joinclause =source.join%}
+
+{# == To run data quality tests before data insertion == #}
+
+{% for test in node.tests if config.testsEnabled %}
+        {% if test.runOrder == 'Before' %}
+            {{ test_stage(test.name, test.continueOnFailure) }}
+            {{ test.templateString }}
+        {% endif %}
+{% endfor %}
+
+{% if (node.materializationType == 'table')%}
+{% if config.truncateBefore  %}
+
+    {{ stage('Truncate  Table') }}
+    TRUNCATE TABLE {{ this }}
+
+{% endif %}
+
+         {%- set ns = namespace(pcolumn = [],collist = []) %}
+  
+         {#Infer Unpivot structure#}
+          {%if config.inferunpivot == true %}
+                  {%set ns.pcolumn = config.tabValueColumn.get('items') | map(attribute='valColDropdown.name') | list%}
+                  {%if ns.pcolumn == []%}
+                     {%set ns.pcolumn = config.tabValueColumn.get('items') | map(attribute='ColTextBox')|list%}    
+                  {%endif%}
+          {%else%}
+                  {%set ns.pcolumn = config.tabValueColumn.get('items') | map(attribute='ColTextBox')|list%}
+          {%endif%}
+
+          {%for col in ns.pcolumn%}
+              {%set ns.collist = ns.collist + ['`'+col+'`']%}
+           {%endfor%}
+
+         {% set source = sources[0] %}
+
+{{ stage('Insert ' + source.name | string ) }}
+INSERT INTO {{ this }}
+ ( 
+               SELECT 
+               {% for col in source.columns %}        
+                  {%if col.name not in ns.collist|join(',') and col.name|upper != config.nameColTextBox|upper and col.name|upper != config.valColTextBox|upper  %}
+			            {{ get_source_transform(col) }} AS `{{ col.name }}`,
+                  {%endif%}
+		           {% endfor %}                
+			    {{config.nameColTextBox}},
+                {{config.valColTextBox}}
+               {{  get_clause(joinclause,'from')  }} 
+               UNPIVOT {%if config.includenull %}INCLUDE NULLS {%endif%}({{config.valColTextBox}} FOR {{config.nameColTextBox}} IN ({{ns.collist|join(',')}}))
+               {{  get_clause(joinclause)  }}
+             )
+{%endif%}
+
+{# == To run data quality tests after data insertion == #}
+
+{% if config.testsEnabled %}
+	{% for test in node.tests %}
+		{% if test.runOrder == 'After' %}
+			{{ test_stage(test.name, test.continueOnFailure) }}
+			{{ test.templateString }}
+        {% endif %}
+	{% endfor %}
+
+	{% for column in columns %}
+		{% for test in column.tests %}
+			{{ test_stage(column.name + ": " + test.name) }}
+			{{ test.templateString }}
+		{% endfor %}
+	{% endfor %}
+{% endif %}

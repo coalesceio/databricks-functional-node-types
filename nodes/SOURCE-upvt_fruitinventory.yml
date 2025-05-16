@@ -1,0 +1,98 @@
+fileVersion: 1
+id: e1461740-5e53-44d0-a350-7f89ad9c9390
+name: upvt_fruitinventory
+operation:
+  config:
+    includenull: false
+    inferunpivot: true
+    nameColTextBox: Store
+    tabValueColumn:
+      items:
+        - ColTextBox: StoreA
+          valColDropdown:
+            columnCounter: dd706dbb-8b63-4c2f-85d7-7577e245e0ca
+            stepCounter: e1461740-5e53-44d0-a350-7f89ad9c9390
+        - ColTextBox: StoreB
+          valColDropdown:
+            columnCounter: d0eac97b-ea68-4919-b603-09f36bd83656
+            stepCounter: e1461740-5e53-44d0-a350-7f89ad9c9390
+    testsEnabled: false
+    truncateBefore: true
+    valColTextBox: Quantity
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: SOURCE
+  materializationType: table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: f1d21287-dd3c-4ac7-a691-d31e897f7cb7
+          stepCounter: e1461740-5e53-44d0-a350-7f89ad9c9390
+        config: {}
+        dataType: STRING
+        description: ""
+        name: FruitName
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 8f98b512-2e28-4867-b289-aa4d21e16c12
+                stepCounter: efa72c03-b08f-4195-ac34-514e0c60aaf1
+            transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: dd706dbb-8b63-4c2f-85d7-7577e245e0ca
+          stepCounter: e1461740-5e53-44d0-a350-7f89ad9c9390
+        config: {}
+        dataType: STRING
+        defaultValue: ""
+        description: ""
+        name: StoreA
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: d0eac97b-ea68-4919-b603-09f36bd83656
+          stepCounter: e1461740-5e53-44d0-a350-7f89ad9c9390
+        config: {}
+        dataType: STRING
+        defaultValue: ""
+        description: ""
+        name: StoreB
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases: {}
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: SOURCE
+            nodeName: fruitinventory
+        join:
+          joinCondition: FROM {{ ref('SOURCE', 'fruitinventory') }} `fruitinventory`
+        name: upvt_fruitinventory
+        noLinkRefs: []
+  name: upvt_fruitinventory
+  overrideSQL: false
+  schema: ""
+  sqlType: "478"
+  type: sql
+  version: 1
+type: Node

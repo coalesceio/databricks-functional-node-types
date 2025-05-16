@@ -1,0 +1,142 @@
+fileVersion: 1
+id: 76c53ff1-4409-42b7-9260-3eac57ab1f14
+name: upvt_sales_view
+operation:
+  config:
+    includenull: false
+    inferunpivot: true
+    nameColTextBox: sales
+    tabValueColumn:
+      items:
+        - ColTextBox: q1
+          valColDropdown:
+            columnCounter: ebda390a-37c4-4262-bfa7-d90dfc6e098c
+            stepCounter: 76c53ff1-4409-42b7-9260-3eac57ab1f14
+        - ColTextBox: q2
+          valColDropdown:
+            columnCounter: 5a833713-ffc0-4eb6-972a-34160db26014
+            stepCounter: 76c53ff1-4409-42b7-9260-3eac57ab1f14
+        - ColTextBox: q3
+          valColDropdown:
+            columnCounter: accda378-d993-40df-89d8-36592af3f179
+            stepCounter: 76c53ff1-4409-42b7-9260-3eac57ab1f14
+        - ColTextBox: q4
+          valColDropdown:
+            columnCounter: a389b68a-e857-4a0d-8d3f-6660df1e0f2b
+            stepCounter: 76c53ff1-4409-42b7-9260-3eac57ab1f14
+    testsEnabled: false
+    truncateBefore: true
+    valColTextBox: quarter
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: SOURCE
+  materializationType: view
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 16092403-56b3-4cfe-9248-e578441a95f4
+          stepCounter: 76c53ff1-4409-42b7-9260-3eac57ab1f14
+        config: {}
+        dataType: STRING
+        description: ""
+        name: location
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: ee31f9ce-7017-4c4e-881c-92b9c8a27521
+                stepCounter: 431093e7-1930-462f-b16a-5a76d728a009
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: cb8aef7a-7642-4b3c-a93a-ead54a0395ca
+          stepCounter: 76c53ff1-4409-42b7-9260-3eac57ab1f14
+        config: {}
+        dataType: INT
+        description: ""
+        name: year
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: dcc18863-c857-48a7-b2a8-ce14f06197e2
+                stepCounter: 431093e7-1930-462f-b16a-5a76d728a009
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: ebda390a-37c4-4262-bfa7-d90dfc6e098c
+          stepCounter: 76c53ff1-4409-42b7-9260-3eac57ab1f14
+        config: {}
+        dataType: INT
+        description: ""
+        name: q1
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 8bf05146-2616-4d4a-a422-28e6f0bf15a7
+                stepCounter: 431093e7-1930-462f-b16a-5a76d728a009
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 5a833713-ffc0-4eb6-972a-34160db26014
+          stepCounter: 76c53ff1-4409-42b7-9260-3eac57ab1f14
+        config: {}
+        dataType: INT
+        description: ""
+        name: q2
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 22c18e64-29e7-431a-b4e3-93cf01ddc73f
+                stepCounter: 431093e7-1930-462f-b16a-5a76d728a009
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: accda378-d993-40df-89d8-36592af3f179
+          stepCounter: 76c53ff1-4409-42b7-9260-3eac57ab1f14
+        config: {}
+        dataType: INT
+        description: ""
+        name: q3
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: bcb44e50-ac8f-4f6b-ba1c-25b96c62aba2
+                stepCounter: 431093e7-1930-462f-b16a-5a76d728a009
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: a389b68a-e857-4a0d-8d3f-6660df1e0f2b
+          stepCounter: 76c53ff1-4409-42b7-9260-3eac57ab1f14
+        config: {}
+        dataType: INT
+        description: ""
+        name: q4
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 33326e01-28f5-43e1-ba0d-c162a6fd8fd4
+                stepCounter: 431093e7-1930-462f-b16a-5a76d728a009
+            transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases: {}
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: SOURCE
+            nodeName: sales
+        join:
+          joinCondition: FROM {{ ref('SOURCE', 'sales') }} `sales`
+        name: upvt_sales_view
+        noLinkRefs: []
+  name: upvt_sales_view
+  overrideSQL: false
+  schema: ""
+  sqlType: "478"
+  type: sql
+  version: 1
+type: Node

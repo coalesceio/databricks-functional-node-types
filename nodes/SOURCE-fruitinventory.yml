@@ -1,0 +1,67 @@
+fileVersion: 1
+id: efa72c03-b08f-4195-ac34-514e0c60aaf1
+name: fruitinventory
+operation:
+  database: ""
+  deployEnabled: true
+  description: ""
+  locationName: SOURCE
+  metadata:
+    columns:
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 8f98b512-2e28-4867-b289-aa4d21e16c12
+          stepCounter: efa72c03-b08f-4195-ac34-514e0c60aaf1
+        config: {}
+        dataType: STRING
+        defaultValue: ""
+        description: ""
+        name: FruitName
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 074c10a1-4c14-4267-8daa-3ca17458c758
+          stepCounter: efa72c03-b08f-4195-ac34-514e0c60aaf1
+        config: {}
+        dataType: INT
+        defaultValue: ""
+        description: ""
+        name: StoreA
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 6c67f88e-ceab-4bff-a1e6-660a561c61de
+          stepCounter: efa72c03-b08f-4195-ac34-514e0c60aaf1
+        config: {}
+        dataType: INT
+        defaultValue: ""
+        description: ""
+        name: StoreB
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+  name: fruitinventory
+  schema: ""
+  sqlType: Source
+  type: sourceInput
+  version: 1
+type: Node

@@ -1,0 +1,118 @@
+fileVersion: 1
+id: 431093e7-1930-462f-b16a-5a76d728a009
+name: sales
+operation:
+  database: ""
+  deployEnabled: true
+  description: ""
+  locationName: SOURCE
+  metadata:
+    columns:
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: ee31f9ce-7017-4c4e-881c-92b9c8a27521
+          stepCounter: 431093e7-1930-462f-b16a-5a76d728a009
+        config: {}
+        dataType: STRING
+        defaultValue: ""
+        description: ""
+        name: location
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: dcc18863-c857-48a7-b2a8-ce14f06197e2
+          stepCounter: 431093e7-1930-462f-b16a-5a76d728a009
+        config: {}
+        dataType: INT
+        defaultValue: ""
+        description: ""
+        name: year
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 8bf05146-2616-4d4a-a422-28e6f0bf15a7
+          stepCounter: 431093e7-1930-462f-b16a-5a76d728a009
+        config: {}
+        dataType: INT
+        defaultValue: ""
+        description: ""
+        name: q1
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 22c18e64-29e7-431a-b4e3-93cf01ddc73f
+          stepCounter: 431093e7-1930-462f-b16a-5a76d728a009
+        config: {}
+        dataType: INT
+        defaultValue: ""
+        description: ""
+        name: q2
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: bcb44e50-ac8f-4f6b-ba1c-25b96c62aba2
+          stepCounter: 431093e7-1930-462f-b16a-5a76d728a009
+        config: {}
+        dataType: INT
+        defaultValue: ""
+        description: ""
+        name: q3
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 33326e01-28f5-43e1-ba0d-c162a6fd8fd4
+          stepCounter: 431093e7-1930-462f-b16a-5a76d728a009
+        config: {}
+        dataType: INT
+        defaultValue: ""
+        description: ""
+        name: q4
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+  name: sales
+  schema: ""
+  sqlType: Source
+  type: sourceInput
+  version: 1
+type: Node

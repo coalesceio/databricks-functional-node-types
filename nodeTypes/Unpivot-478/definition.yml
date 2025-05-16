@@ -1,0 +1,81 @@
+fileVersion: 1
+id: "478"
+isDisabled: false
+metadata:
+  defaultStorageLocation: null
+  error: null
+  nodeMetadataSpec: |-
+    capitalized: Unpivot
+    short: UPVT
+    plural: UNPIVOTS
+    tagColor: '#29B2DB'
+
+
+    deployStrategy: advanced
+    isColumnResyncEnabled: true
+
+
+    config:
+    - groupName: Options
+      items:
+      - type: materializationSelector
+        isRequired: true
+        default: table
+        options:
+        - table
+        - view
+
+      - displayName: Truncate Before
+        attributeName: truncateBefore
+        type: toggleButton
+        default: true
+
+      - displayName: Enable Tests
+        attributeName: testsEnabled
+        type: toggleButton
+        default: false
+        enableIf: "{% if node.materializationType == 'view' %} false {% else %} true {% endif %}"
+
+    - groupName: Unpivot Options
+      items:
+     
+        - displayName: Infer Structure of Unpivot Data
+          attributeName: inferunpivot
+          type: toggleButton
+          default: false
+      
+        - displayName: Value Column-Column that will hold the values from the unpivoted columns
+          type: textBox
+          attributeName: valColTextBox
+          isRequired: true
+
+        - displayName: Name column-Column that will hold the names of the unpivoted columns
+          type: textBox
+          attributeName: nameColTextBox
+          isRequired: true
+
+        - type: tabular
+          displayName: Column list
+          attributeName: tabValueColumn 
+          isRequired: true
+          columns:
+      
+          - displayName: Column list
+            type: columnDropdownSelector
+            attributeName: valColDropdown
+            enableIf: "{% if config.inferunpivot %} true {% else %} false {% endif %}"
+         
+          - displayName: Column list
+            type: textBox
+            attributeName: ColTextBox
+
+        - displayName: Include NULLS
+          attributeName: includenull
+          type: toggleButton
+          default: false
+        
+      
+
+     
+name: Unpivot
+type: NodeType
