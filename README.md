@@ -153,7 +153,7 @@ This is executed in below stage:
 
 | **Component** | **Link** |
 |--------------|-----------|
-| **Node definition** | [definition.yml](https://github.com/coalesceio/databricks-functional-node-types/blob/main/nodeTypes/DateDimension-461/create.sql.j2)|
-| **Create Template** | [create.sql.j2](https://github.com/coalesceio/databricks-functional-node-types/blob/main/nodeTypes/DateDimension-461/definition.yml) |
+| **Node definition** | [definition.yml](https://github.com/coalesceio/databricks-functional-node-types/blob/main/nodeTypes/DateDimension-461/definition.yml) |
+| **Create Template** | [create.sql.j2](https://github.com/coalesceio/databricks-functional-node-types/blob/main/nodeTypes/DateDimension-461/create.sql.j2)|
 | **Run Template** | [run.sql.j2](https://github.com/coalesceio/databricks-functional-node-types/blob/main/nodeTypes/DateDimension-461/run.sql.j2) |
 
