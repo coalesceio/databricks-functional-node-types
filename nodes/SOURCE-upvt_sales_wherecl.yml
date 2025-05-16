@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 3c7f81a1-e902-4bbe-accb-3d2b00bcd128
-name: upvt_sales_where
+name: upvt_sales_wherecl
 operation:
   config:
     includenull: false
@@ -101,9 +101,9 @@ operation:
             FROM {{ ref('SOURCE', 'sales') }} `sales`
             where Sales >=300
             order by Sales
-        name: upvt_sales_where
+        name: upvt_sales_wherecl
         noLinkRefs: []
-  name: upvt_sales_where
+  name: upvt_sales_wherecl
   overrideSQL: false
   schema: ""
   sqlType: "478"
