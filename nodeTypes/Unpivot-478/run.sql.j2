@@ -22,11 +22,11 @@ does not permit copying or modification for any other purpose.
         {% endif %}
 {% endfor %}
 
-{% if (node.materializationType == 'table' or node.materializationType == 'transient table')%}
+{% if (node.materializationType == 'table')%}
 {% if config.truncateBefore  %}
 
     {{ stage('Truncate  Table') }}
-    TRUNCATE IF EXISTS {{ this }}
+    TRUNCATE TABLE {{ this }}
 
 {% endif %}
 

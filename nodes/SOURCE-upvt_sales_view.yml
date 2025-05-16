@@ -4,14 +4,29 @@ name: upvt_sales_view
 operation:
   config:
     includenull: false
-    inferunpivot: false
-    nameColTextBox: ""
+    inferunpivot: true
+    nameColTextBox: sales
     tabValueColumn:
       items:
-        - {}
+        - ColTextBox: q1
+          valColDropdown:
+            columnCounter: ebda390a-37c4-4262-bfa7-d90dfc6e098c
+            stepCounter: 76c53ff1-4409-42b7-9260-3eac57ab1f14
+        - ColTextBox: q2
+          valColDropdown:
+            columnCounter: 5a833713-ffc0-4eb6-972a-34160db26014
+            stepCounter: 76c53ff1-4409-42b7-9260-3eac57ab1f14
+        - ColTextBox: q3
+          valColDropdown:
+            columnCounter: accda378-d993-40df-89d8-36592af3f179
+            stepCounter: 76c53ff1-4409-42b7-9260-3eac57ab1f14
+        - ColTextBox: q4
+          valColDropdown:
+            columnCounter: a389b68a-e857-4a0d-8d3f-6660df1e0f2b
+            stepCounter: 76c53ff1-4409-42b7-9260-3eac57ab1f14
     testsEnabled: false
     truncateBefore: true
-    valColTextBox: ""
+    valColTextBox: quarter
   database: ""
   deployEnabled: true
   description: ""

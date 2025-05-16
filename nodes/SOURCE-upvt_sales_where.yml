@@ -1,0 +1,112 @@
+fileVersion: 1
+id: 3c7f81a1-e902-4bbe-accb-3d2b00bcd128
+name: upvt_sales_where
+operation:
+  config:
+    includenull: false
+    inferunpivot: false
+    nameColTextBox: Quarter
+    tabValueColumn:
+      items:
+        - ColTextBox: q1
+        - ColTextBox: q2
+        - ColTextBox: q3
+        - ColTextBox: q4
+    testsEnabled: false
+    truncateBefore: true
+    valColTextBox: Sales
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: SOURCE
+  materializationType: table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 3f382733-8fbb-4161-84e0-79721b2c78da
+          stepCounter: 3c7f81a1-e902-4bbe-accb-3d2b00bcd128
+        config: {}
+        dataType: STRING
+        description: ""
+        name: location
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: ee31f9ce-7017-4c4e-881c-92b9c8a27521
+                stepCounter: 431093e7-1930-462f-b16a-5a76d728a009
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 7516aa74-5645-47dd-add5-90000cda0e77
+          stepCounter: 3c7f81a1-e902-4bbe-accb-3d2b00bcd128
+        config: {}
+        dataType: INT
+        description: ""
+        name: year
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: dcc18863-c857-48a7-b2a8-ce14f06197e2
+                stepCounter: 431093e7-1930-462f-b16a-5a76d728a009
+            transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 547600c1-ac28-4775-8a5b-fe7936e48b31
+          stepCounter: 3c7f81a1-e902-4bbe-accb-3d2b00bcd128
+        config: {}
+        dataType: STRING
+        defaultValue: ""
+        description: ""
+        name: Sales
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 81a03047-7505-4a87-a6a9-13bce8140cc4
+          stepCounter: 3c7f81a1-e902-4bbe-accb-3d2b00bcd128
+        config: {}
+        dataType: INT
+        defaultValue: ""
+        description: ""
+        name: Quarter
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases:
+          sales: 431093e7-1930-462f-b16a-5a76d728a009
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: SOURCE
+            nodeName: sales
+        join:
+          joinCondition: |-
+            FROM {{ ref('SOURCE', 'sales') }} `sales`
+            where Sales >=300
+            order by Sales
+        name: upvt_sales_where
+        noLinkRefs: []
+  name: upvt_sales_where
+  overrideSQL: false
+  schema: ""
+  sqlType: "478"
+  type: sql
+  version: 1
+type: Node

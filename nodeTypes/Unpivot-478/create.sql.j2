@@ -87,10 +87,11 @@ does not permit copying or modification for any other purpose.
                UNPIVOT {%if desiredState.config.includenull %}INCLUDE NULLS {%endif%}({{desiredState.config.valColTextBox}} FOR {{desiredState.config.nameColTextBox}} IN ({{ns.collist|join(',')}}))
                {{ get_clause(joinclause) }}
              )
+
          {%elif desiredState.config.inferunpivot == false and desiredState.node.materializationType != 'view'%}
 
             {% if currentState == undefined or (currentState != undefined and currentState.node.materializationType != desiredState.node.materializationType)  %}
-               {{ stage('Create Pivot '+ ' {{desiredState.node.materializationType}}' , true, "sql", "create") }}
+               {{ stage('Create Unpivot '+ ' {{desiredState.node.materializationType}}' , true, "sql", "create") }}
                CREATE OR REPLACE {{desiredState.node.materializationType}} {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
               (
                 {% for col in desiredState.columns %}
@@ -102,7 +103,8 @@ does not permit copying or modification for any other purpose.
                     {%- if not loop.last -%}, {% endif %}
                 {% endfor %}
                )
-              {%- if desiredState.node.description | length > 0 %} COMMENT = '{{ desiredState.node.description | escape }}'{% endif %}
+              {%- if desiredState.node.description | length > 0 %} COMMENT  '{{ desiredState.node.description | escape }}'{% endif %}
+              TBLPROPERTIES('delta.columnMapping.mode' = 'name')
            {% endif %}
            
             {% if currentState != undefined%}
@@ -152,7 +154,6 @@ does not permit copying or modification for any other purpose.
                       IS  '{{ desiredState.node.description | escape }}'
                  {% endif %}
                  
-
 
                  {# Drop Columns #}
                  {% set nsVariables = namespace(colchanges=0) %}
@@ -235,7 +236,7 @@ does not permit copying or modification for any other purpose.
                         {% if nsVariables.colchanges == 1 %}
                             {{ stage('Change Column Attributes', true, "sql", "alter") }}
                             ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
-                            MODIFY
+                            ALTER
                         {% endif %}
                         {% if datatypeTest == false %}
                             {% if nsVariables.colchanges > 1 %},{% endif %}
@@ -245,7 +246,7 @@ does not permit copying or modification for any other purpose.
                         {% endif %}
                         {% if nullableTest == false %}
                             {% if nsVariables.colchanges > 1 %},{% endif %}
-                            COLUMN "{{ desiredColumnName }}"
+                            COLUMN `{{ desiredColumnName }}`
                             {% if currentNullable == true %}
                                 SET
                             {% else %}
@@ -256,13 +257,13 @@ does not permit copying or modification for any other purpose.
                         {% endif %}
                         {% if descriptionTest == false %}
                             {% if nsVariables.colchanges > 1 %},{% endif %}
-                            COLUMN "{{ desiredColumnName }}"
+                            COLUMN `{{ desiredColumnName }}`
                             COMMENT '{{ desiredDescription |escape }}'
                             {% set nsVariables.colchanges = nsVariables.colchanges + 1 %}
                         {% endif %}
                         {% if defaultValueTest == false %}
                             {% if nsVariables.colchanges > 1 %},{% endif %}
-                            COLUMN "{{ desiredColumnName }}"
+                            COLUMN `{{ desiredColumnName }}`
                             {% if desiredDefaultValue == '' %}
                                 DROP DEFAULT
                             {% else %}

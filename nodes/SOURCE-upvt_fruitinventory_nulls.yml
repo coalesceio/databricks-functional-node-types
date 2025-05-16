@@ -1,21 +1,15 @@
 fileVersion: 1
-id: e1461740-5e53-44d0-a350-7f89ad9c9390
-name: upvt_fruitinventory
+id: d31183c9-8d2c-4d6d-93cb-2ffe215120b6
+name: upvt_fruitinventory_nulls
 operation:
   config:
-    includenull: false
-    inferunpivot: true
-    nameColTextBox: Store
+    includenull: true
+    inferunpivot: false
+    nameColTextBox: Sales
     tabValueColumn:
       items:
         - ColTextBox: StoreA
-          valColDropdown:
-            columnCounter: dd706dbb-8b63-4c2f-85d7-7577e245e0ca
-            stepCounter: e1461740-5e53-44d0-a350-7f89ad9c9390
         - ColTextBox: StoreB
-          valColDropdown:
-            columnCounter: d0eac97b-ea68-4919-b603-09f36bd83656
-            stepCounter: e1461740-5e53-44d0-a350-7f89ad9c9390
     testsEnabled: false
     truncateBefore: true
     valColTextBox: Quantity
@@ -30,8 +24,8 @@ operation:
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: f1d21287-dd3c-4ac7-a691-d31e897f7cb7
-          stepCounter: e1461740-5e53-44d0-a350-7f89ad9c9390
+          columnCounter: 0957ad33-74a6-4488-958a-8d73106ba1ed
+          stepCounter: d31183c9-8d2c-4d6d-93cb-2ffe215120b6
         config: {}
         dataType: STRING
         description: ""
@@ -47,13 +41,13 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: dd706dbb-8b63-4c2f-85d7-7577e245e0ca
-          stepCounter: e1461740-5e53-44d0-a350-7f89ad9c9390
+          columnCounter: dfca60ff-f8e3-4f1a-8bbc-c3a564176191
+          stepCounter: d31183c9-8d2c-4d6d-93cb-2ffe215120b6
         config: {}
         dataType: STRING
         defaultValue: ""
         description: ""
-        name: StoreA
+        name: Sales
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
@@ -64,13 +58,13 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: d0eac97b-ea68-4919-b603-09f36bd83656
-          stepCounter: e1461740-5e53-44d0-a350-7f89ad9c9390
+          columnCounter: 88e2c71c-cf4a-4779-b3ef-3183c0dc42df
+          stepCounter: d31183c9-8d2c-4d6d-93cb-2ffe215120b6
         config: {}
-        dataType: STRING
+        dataType: INT
         defaultValue: ""
         description: ""
-        name: StoreB
+        name: Quantity
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
@@ -87,9 +81,9 @@ operation:
             nodeName: fruitinventory
         join:
           joinCondition: FROM {{ ref('SOURCE', 'fruitinventory') }} `fruitinventory`
-        name: upvt_fruitinventory
+        name: upvt_fruitinventory_nulls
         noLinkRefs: []
-  name: upvt_fruitinventory
+  name: upvt_fruitinventory_nulls
   overrideSQL: false
   schema: ""
   sqlType: "478"
