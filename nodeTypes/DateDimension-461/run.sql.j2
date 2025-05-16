@@ -1,0 +1,137 @@
+{#
+    Copyright (c) 2023 Coalesce. All rights reserved.
+This script and its associated documentation are confidential and proprietary to Coalesce.
+Unauthorized reproduction, distribution, or disclosure of this material is strictly prohibited.
+Coalesce permits you to copy and modify this script for the purposes of using with Coalsce but
+does not permit copying or modification for any other purpose.  
+#}
+{# == Node Type Version        : 1  == #}
+{# == Node Type Name           : Date Dimension == #}
+{# == Node Type Description    : This node creates Date table,view and also override create sql for view with advanced deployment strategy and loads the date records  == #}
+
+{% if config.preSQL %}
+    {{ stage('Pre-SQL') }}
+    {{ config.preSQL }}
+{% endif %}
+
+{% if config.truncateBefore and node.materializationType != 'view'%}
+    {{ stage('Truncate Date Table') }}
+    TRUNCATE TABLE  {{ ref_no_link(node.location.name, node.name) }}
+{% endif %}
+
+{% if config.insertZeroKey and node.materializationType != 'view' %}
+        {{ stage('Insert Zero Record') }}
+        MERGE INTO {{ ref_no_link(node.location.name, node.name) }}USING
+        (SELECT 
+        {% for col in sources[0].columns %}
+        	{% set dtparams = col.dataType.partition('(')[-1].rpartition(')')[0].split(',') %}
+        	{% if col.isSurrogateKey %} {{config.insertZeroKeySurrogateKey}}
+        	{% elif col.isSystemCurrentFlag %}'Y'
+        	{% elif col.isSystemStartDate or col.isSystemEndDate or col.isSystemUpdateDate or col.isSystemCreateDate %}{{ get_source_transform(col) }}
+        	{% elif col.isSystemVersion%}1
+        	{% elif col.dataType[:3] | upper in ('NUM','INT','DEC','FLO') %}0
+        	{% elif col.dataType[:4] | upper in ('DATE','TIME') %}CAST(TO_TIMESTAMP( '{{config.insertZeroKeyDate}}', 'dd-MM-yyyy') AS {{ col.dataType }})
+        	{% elif col.dataType[:3] | upper in ('VAR','CHA','STR','BIN') %}
+        			{% if dtparams[0] and dtparams[0] | int <  config.insertZeroKeyStr | length  %}
+        			SUBSTRING({{config.insertZeroKeyStr}},1,{{ dtparams[0] }})
+        			{% else %}
+        				'{{config.insertZeroKeyStr}}'
+        			{% endif %}
+        	{% elif col.nullable %}NULL
+        	{% else %}''
+        	{% endif %}
+        	AS `{{ col.name }}`
+        	{% if not loop.last %}, {% endif %}
+        {% endfor %}
+
+        )AS SOURCE_ZERO
+        ON 
+        {% for col in columns if col.isSurrogateKey or col.isBusinessKey %}
+             {{ node.name}}.{{ col.name}} =  COALESCE( CAST(FROM_UNIXTIME(UNIX_TIMESTAMP('{{config.insertZeroKeySurrogateKey}}', 'dd-MM-yyyy')) AS DATE), DATE('{{config.insertZeroKeySurrogateKey}}'))	
+             {% if not loop.last %} AND {% endif %}	
+	    {% endfor -%}			
+        WHEN MATCHED THEN UPDATE
+        SET
+        {%- for col in columns if (not col.isSurrogateKey and not col.isBusinessKey) %}
+        	{{ node.name}}.{{ col.name}} =SOURCE_ZERO.{{ col.name}}
+        	{% if not loop.last %}, {% endif %}			
+        {% endfor -%}
+        WHEN NOT MATCHED THEN INSERT
+        (
+        {%- for col in columns %}
+        	{{ col.name}}
+        	{% if not loop.last %}, {% endif %}			
+        {% endfor -%}
+        )
+        VALUES
+        (
+        {%- for col in columns %}
+         SOURCE_ZERO.{{ col.name}}			
+        	{% if not loop.last %}, {% endif %}			
+        {% endfor -%}
+        )
+{% endif %}	
+
+{%if node.materializationType != 'view'%}
+		
+    {{ stage('Insert ' + sources[0].name | string ) }}
+    MERGE INTO {{ ref_no_link(node.location.name, node.name) }} AS TGT
+	USING (
+	    WITH CTE_DATE_GENERATOR AS (
+           SELECT DATE_FORMAT(DATEADD(DAY, id, {{config.startingDate }}),'yyyy-MM-dd') AS {{config.dateColumnName }}
+           FROM RANGE(0, {{config.daysToGenerate }}) 
+    )
+    SELECT
+    {% for col in sources[0].columns %}
+        {{ col.transform }} AS `{{ col.name }}`
+        {%- if not loop.last -%}, {% endif %}
+    {% endfor %}
+    FROM CTE_DATE_GENERATOR
+    ) AS SRC
+    ON 
+    {% for col in sources[0].columns  if col.isBusinessKey -%}
+    {% if not loop.first %} AND  {% endif %}
+    `TGT`.`{{ col.name }}` = `SRC`.`{{ col.name }}`
+    {% endfor %}
+    WHEN MATCHED THEN
+    UPDATE SET
+    {%- for col in sources[0].columns if not (col.isBusinessKey or col.isSurrogateKey or col.isSystemCreateDate) %}
+        `TGT`.`{{ col.name }}` = `SRC`.`{{ col.name }}`
+        {% if not loop.last %}, {% endif %}
+    {% endfor -%}
+    WHEN NOT MATCHED THEN 
+	INSERT    (
+    {% for col in sources[0].columns %}
+        `{{ col.name }}`
+        {%- if not loop.last -%},{% endif %}
+    {% endfor %}
+    )
+    VALUES(
+    {% for col in sources[0].columns %}
+    `SRC`.`{{ col.name }}`
+    {%- if not loop.last -%}, {% endif %}
+    {% endfor %}
+    )
+{%endif%}
+
+{% if config.postSQL %}
+    {{ stage('Post-SQL') }}
+    {{ config.postSQL }}
+{% endif %}
+
+
+{% if config.testsEnabled %}
+	{% for test in node.tests %}
+		{% if test.runOrder == 'After' %}
+			{{ test_stage(test.name, test.continueOnFailure) }}
+			{{ test.templateString }}
+        {% endif %}
+	{% endfor %}
+
+	{% for column in columns %}
+		{% for test in column.tests %}
+			{{ test_stage(column.name + ": " + test.name) }}
+			{{ test.templateString }}
+		{% endfor %}
+	{% endfor %}
+{% endif %}

@@ -1,0 +1,198 @@
+fileVersion: 1
+id: "461"
+isDisabled: false
+metadata:
+  defaultStorageLocation: null
+  error: null
+  nodeMetadataSpec: |-
+    capitalized: Date Dimension
+    short: DIM_DATE
+    plural: Dates
+    tagColor: 'black'
+
+    deployStrategy: advanced
+
+    config:
+    - groupName: Date Options
+      items:
+      - displayName: Starting Date
+        attributeName: startingDate
+        type: textBox
+        syntax: sql
+        default: 'DATEADD(DAY, -730, CURRENT_DATE)'
+        isRequired: true
+
+      - displayName: Number of Days to Generate
+        attributeName: daysToGenerate
+        type: textBox
+        default: '2000'
+        isRequired: true
+        
+      - displayName: Generated Date Column Name
+        attributeName: dateColumnName
+        type: textBox
+        default: '`DATE_COL`'
+        isRequired: true
+
+    - groupName: Additional Options
+      items:
+      - type: materializationSelector
+        default: table
+        options:
+        - table
+        - view
+        isRequired: true
+
+      - type: overrideSQLToggle
+        enableIf: "{% if node.materializationType == 'view' %} true {% else %} false {% endif %}"
+
+      - displayName: Truncate Before
+        attributeName: truncateBefore
+        type: toggleButton
+        default: true
+        isRequired: false
+        enableIf: "{% if node.materializationType != 'view' %} true {% else %} false {% endif %}"
+
+      - type: toggleButton
+        attributeName: insertZeroKey
+        displayName: Insert Zero Key Record
+        default: false
+        enableIf: "{% if node.materializationType == 'table' or node.materializationType == 'transient table'%} true {% else %} false {% endif %}"
+
+      - displayName: Default String Value
+        attributeName: insertZeroKeyStr
+        type: textBox
+        defaultValue: "UNKNOWN"
+        isRequired: false
+        enableIf: "{% if config.insertZeroKey == true and node.materializationType != 'view' %} true {% else %} false {% endif %}"
+
+      - displayName: Default Surrogate Key Value
+        attributeName: insertZeroKeySurrogateKey
+        type: textBox
+        defaultValue: "0"
+        isRequired: false
+        enableIf: "{% if config.insertZeroKey == true and node.materializationType != 'view' %} true {% else %} false {% endif %}"
+
+      - displayName: Default Date Value (Date Format DD-MM-YYYY)
+        attributeName: insertZeroKeyDate
+        type: textBox
+        defaultValue: "01-01-1900"
+        isRequired: false
+        enableIf: "{% if config.insertZeroKey == true and node.materializationType != 'view' %} true {% else %} false {% endif %}"
+
+      - type: businessKeyColumns
+        isRequired: true
+        
+      - displayName: Enable Tests
+        attributeName: testsEnabled
+        type: toggleButton
+        default: false
+        enableIf: "{% if node.materializationType == 'view' %} false {% else %} true {% endif %}"
+
+      - displayName: Pre-SQL
+        attributeName: preSQL
+        type: textBox
+        syntax: sql
+        isRequired: false
+        
+      - displayName: Post-SQL
+        attributeName: postSQL
+        type: textBox
+        syntax: sql
+        isRequired: false
+        
+    systemColumns:
+    - displayName: DATE_KEY
+      transform: '{{ config.dateColumnName }}'
+      dataType: 'DATE'
+      description: "Date in the format YYYY-MM-DD"
+      attributeName: isBusinessKey
+      placement: beginning
+      isBusinessKey: true
+
+    - displayName: 'YEAR'
+      transform: 'YEAR({{ config.dateColumnName }})'
+      dataType: SMALLINT
+      description: "Year in the format YYYY"
+      placement: beginning
+      attributeName: isYear
+    - displayName: 'MONTH'
+      transform: 'MONTH({{ config.dateColumnName }})'
+      dataType: SMALLINT
+      description: "Month in the format MM"
+      placement: beginning
+      attributeName: isMonth
+    - displayName: 'MONTH_NAME'
+      transform: 'MONTHNAME({{ config.dateColumnName }})'
+      dataType: CHAR(3)
+      description: "Month in the format MMM"
+      placement: beginning
+      attributeName: isMonthName
+    - displayName: 'DAY_OF_MONTH'
+      transform: 'DAY({{ config.dateColumnName }})'
+      dataType: SMALLINT
+      description: "Day in the format DD"
+      placement: beginning
+      attributeName: isDayOfMonth
+    - displayName: 'DAY_OF_WEEK'
+      transform: 'DAYOFWEEK({{ config.dateColumnName }})'
+      dataType: VARCHAR(9)
+      description: "Day of the Week in format DD"
+      placement: beginning
+      attributeName: isDayOfWeek
+    - displayName: 'DAY_NAME_OF_WEEK'
+      transform: "DAYNAME({{ config.dateColumnName }})"
+      dataType: VARCHAR(9)
+      description: "Day of the Week in format DDD"
+      placement: beginning
+      attributeName: isDayNameOfWeek
+    - displayName: 'WEEK_OF_YEAR'
+      transform: 'WEEKOFYEAR({{ config.dateColumnName }})'
+      dataType: SMALLINT
+      description: "Week of the Year"
+      placement: beginning
+      attributeName: isWeekOfYear
+    - displayName: 'DAY_OF_YEAR'
+      transform: 'DAYOFYEAR({{ config.dateColumnName }})'
+      dataType: SMALLINT
+      description: "Day of the year"
+      placement: beginning
+      attributeName: isYearColumn
+    - displayName: 'QUARTER_NUMBER'
+      transform: "QUARTER({{config.dateColumnName}})"
+      dataType: SMALLINT
+      description: "Quarter Number of the year (1-4)"
+      placement: beginning
+      attributeName: isQuarterNumber
+    - displayName: 'QUARTER'
+      transform: "CAST(DATE_FORMAT({{config.dateColumnName}}, 'yyyy') || '0' || CAST(QUARTER({{config.dateColumnName}}) AS STRING) AS INT)"
+      dataType: INT
+      description: "Year and the Quarter number in the format YYYYQQ"
+      placement: beginning
+      attributeName: isQuarter
+    - displayName: 'FLAG_WEEK_DAY'
+      transform: "CASE WHEN TO_CHAR({{config.dateColumnName }}, 'Dy') IN ('Sat','Sun') THEN 'N' ELSE 'Y' END"
+      dataType: VARCHAR(9)
+      description: "Flag to check week day"
+      placement: beginning
+      attributeName: isFlagWeekDay
+    - displayName: 'FLAG_WEEK_END'
+      transform: "CASE WHEN TO_CHAR({{config.dateColumnName }}, 'Dy') IN ('Sat','Sun') THEN 'Y' ELSE 'N' END"
+      dataType: VARCHAR(9)
+      description: "Flag to check weekend"
+      placement: beginning
+      attributeName: isFlagWeekEnd
+
+    - displayName: SYSTEM_CREATE_DATE
+      transform: CAST(CURRENT_TIMESTAMP AS TIMESTAMP)
+      dataType: TIMESTAMP
+      placement: end
+      attributeName: isSystemCreateDate
+
+    - displayName: SYSTEM_UPDATE_DATE
+      transform: CAST(CURRENT_TIMESTAMP AS TIMESTAMP)
+      dataType: TIMESTAMP
+      placement: end
+      attributeName: isSystemUpdateDate
+name: Date Dimension
+type: NodeType
