@@ -19,7 +19,7 @@ operation:
   description: Date Dimension table-ddx
   isMultisource: false
   locationName: TARGET
-  materializationType: table
+  materializationType: view
   metadata:
     appliedNodeTests: []
     columns:
