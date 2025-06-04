@@ -1,0 +1,84 @@
+fileVersion: 1
+id: 97bddd39-0d50-4a2e-a4f2-eff6723a0ea9
+name: yearly_sales
+operation:
+  database: ""
+  deployEnabled: true
+  description: ""
+  locationName: SOURCE
+  metadata:
+    columns:
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 3f4800e8-b5a3-4905-a2a6-ea07e2438d2c
+          stepCounter: 97bddd39-0d50-4a2e-a4f2-eff6723a0ea9
+        config: {}
+        dataType: INT
+        defaultValue: ""
+        description: ""
+        name: year
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 5a65b842-e8bd-47c7-a506-3ab20a446a23
+          stepCounter: 97bddd39-0d50-4a2e-a4f2-eff6723a0ea9
+        config: {}
+        dataType: INT
+        defaultValue: ""
+        description: ""
+        name: quarter
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: e1b54ff6-65ae-4b66-b134-7a8478e0f4f6
+          stepCounter: 97bddd39-0d50-4a2e-a4f2-eff6723a0ea9
+        config: {}
+        dataType: STRING
+        defaultValue: ""
+        description: ""
+        name: region
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: d1c5d7aa-ea2e-4850-b6c7-f084c89aa462
+          stepCounter: 97bddd39-0d50-4a2e-a4f2-eff6723a0ea9
+        config: {}
+        dataType: INT
+        defaultValue: ""
+        description: ""
+        name: sales
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+  name: yearly_sales
+  schema: ""
+  sqlType: Source
+  type: sourceInput
+  version: 1
+type: Node

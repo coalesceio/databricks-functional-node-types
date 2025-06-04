@@ -1,0 +1,84 @@
+fileVersion: 1
+id: b4c0c79f-b2f6-447c-9cb4-0250d5b04f3a
+name: student_performance
+operation:
+  database: ""
+  deployEnabled: true
+  description: ""
+  locationName: SOURCE
+  metadata:
+    columns:
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 08b5bee1-aeb4-472a-8b68-cc3dcb9f423d
+          stepCounter: b4c0c79f-b2f6-447c-9cb4-0250d5b04f3a
+        config: {}
+        dataType: INT
+        defaultValue: ""
+        description: ""
+        name: STUDENT_ID
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 10b1e2c3-cb8a-4412-b72e-b0638ffa8243
+          stepCounter: b4c0c79f-b2f6-447c-9cb4-0250d5b04f3a
+        config: {}
+        dataType: STRING
+        defaultValue: ""
+        description: ""
+        name: TERM
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: ad85d27f-65f9-46dc-8ee9-c88588c8f209
+          stepCounter: b4c0c79f-b2f6-447c-9cb4-0250d5b04f3a
+        config: {}
+        dataType: STRING
+        defaultValue: ""
+        description: ""
+        name: SUBJECT
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 18297455-15e8-4d8b-a9e6-51e00b44d5b3
+          stepCounter: b4c0c79f-b2f6-447c-9cb4-0250d5b04f3a
+        config: {}
+        dataType: INT
+        defaultValue: ""
+        description: ""
+        name: SCORE
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+  name: student_performance
+  schema: ""
+  sqlType: Source
+  type: sourceInput
+  version: 1
+type: Node

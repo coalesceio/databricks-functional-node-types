@@ -1,0 +1,107 @@
+fileVersion: 1
+id: "468"
+isDisabled: false
+metadata:
+  defaultStorageLocation: null
+  error: null
+  nodeMetadataSpec: |-
+    capitalized: PIVOT
+    short: PVT
+    plural: PIVOTS
+    tagColor: '#29B2DB'
+
+    deployStrategy: advanced
+    isColumnResyncEnabled: true
+        
+    config:
+    - groupName: General Options
+      items: 
+      - displayName: Truncate Before
+        attributeName: trunc
+        type: toggleButton
+        default: true
+        enableIf: "{% if node.materializationType == 'view' %} false {% else %} true {% endif %}"
+      
+      - type: materializationSelector
+        isRequired: true
+        default: table
+        options:
+        - table
+        - view
+
+      - displayName: Enable Tests
+        attributeName: testsEnabled
+        type: toggleButton
+        default: false
+        enableIf: "{% if node.materializationType == 'view' %} false {% else %} true {% endif %}"
+
+    - groupName: Pivot Options
+      items:
+      - displayName: Infer Structure of Pivot Data
+        attributeName: inferPivot
+        type: toggleButton
+        default: false
+      
+      - type: tabular
+        displayName: 'Pivot Column-(Cannot add multiple pivot columns)'
+        attributeName: tabKeyColumn
+        isRequired: true
+        columns:
+        
+        - displayName: Pivot Column
+          type: columnDropdownSelector
+          attributeName: keyColDropdown
+          isRequired: false
+          enableIf: "{% if config.inferPivot %} true {% else %} false {% endif %}"
+
+        - displayName: Pivot Column
+          type: textBox
+          attributeName: keyColTextBox
+          isRequired: true
+
+      
+      - type: tabular
+        displayName: 'Value Column'
+        attributeName: tabValueColumn 
+        isRequired: true
+        columns:
+      
+        - displayName: Value Column
+          type: columnDropdownSelector
+          attributeName: valColDropdown
+          enableIf: "{% if config.inferPivot %} true {% else %} false {% endif %}"
+         
+        - displayName: Value Column
+          type: textBox
+          attributeName: valColTextBox
+          
+        -  type: dropdownSelector
+           displayName: Aggregate Functions
+           attributeName: funcname
+           isRequired: false
+           default: AVG
+           options:
+           - AVG
+           - MAX
+           - MIN
+           - COUNT
+           - SUM
+
+
+      - type: tabular
+        displayName: 'FIlter Column'
+        attributeName: filValueColumn 
+        isRequired: true
+        columns:
+
+        - displayName: Filter Column Values(comma separated list of column values-Ex 'Q1','Q2')
+          type: textBox
+          attributeName: Colvol1
+
+        - displayName: Alias for Filter Column Values(comma separated list of column values-Ex 'Q1','Q2')
+          type: textBox
+          attributeName: alcolvol1
+
+             
+name: Pivot
+type: NodeType
