@@ -1,22 +1,26 @@
 fileVersion: 1
-id: 76798005-a886-4d8c-82ba-d274e698200f
-name: pvt_yearly_sales_region
+id: 5ec528a7-738c-4cad-bac9-443e90d531ac
+name: pvt_yearly_sales_qu_region
 operation:
   config:
-    Colvol1: "'east','west'"
-    aggfunc:
+    filValueColumn:
       items:
-        - {}
-    aggfunc1:
-      items:
-        - {}
+        - Colvol1: 1,'east'
+          alcolvol1: q1_east
+        - Colvol1: 2,'west'
+          alcolvol1: q2_west
+        - Colvol1: 1,'west'
+          alcolvol1: q1_west
+        - Colvol1: 2,'east'
+          alcolvol1: q2_east
     inferPivot: false
     tabKeyColumn:
       items:
+        - keyColTextBox: quarter
         - keyColTextBox: region
     tabValueColumn:
       items:
-        - funcname: SUM
+        - funcname: AVG
           valColTextBox: sales
     testsEnabled: false
     trunc: true
@@ -31,8 +35,8 @@ operation:
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 159ca52f-4ed5-4a1c-b11f-1522424f4383
-          stepCounter: 76798005-a886-4d8c-82ba-d274e698200f
+          columnCounter: 967f917f-d043-4f3d-906c-e06c63c306f5
+          stepCounter: 5ec528a7-738c-4cad-bac9-443e90d531ac
         config: {}
         dataType: INT
         description: ""
@@ -43,32 +47,18 @@ operation:
               - columnCounter: 3f4800e8-b5a3-4905-a2a6-ea07e2438d2c
                 stepCounter: 97bddd39-0d50-4a2e-a4f2-eff6723a0ea9
             transform: ""
-      - appliedColumnTests: {}
-        columnReference:
-          columnCounter: adcd26df-0711-4772-9960-9e1c0e5f197a
-          stepCounter: 76798005-a886-4d8c-82ba-d274e698200f
-        config: {}
-        dataType: INT
-        description: ""
-        name: quarter
-        nullable: false
-        sourceColumnReferences:
-          - columnReferences:
-              - columnCounter: 5a65b842-e8bd-47c7-a506-3ab20a446a23
-                stepCounter: 97bddd39-0d50-4a2e-a4f2-eff6723a0ea9
-            transform: ""
       - acceptedValues:
           strictMatch: true
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: ac370739-39ee-4851-9f1c-07ebae9b2f2f
-          stepCounter: 76798005-a886-4d8c-82ba-d274e698200f
+          columnCounter: 8de960f2-e091-4249-98e9-70e55a6feaa9
+          stepCounter: 5ec528a7-738c-4cad-bac9-443e90d531ac
         config: {}
-        dataType: LONG
+        dataType: DOUBLE
         defaultValue: ""
         description: ""
-        name: east_sales
+        name: q1_east
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
@@ -79,13 +69,47 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 4bb9f459-5f32-4926-af9c-32c909d7fae6
-          stepCounter: 76798005-a886-4d8c-82ba-d274e698200f
+          columnCounter: 220e1192-3233-46c7-9999-6ccef1c5f157
+          stepCounter: 5ec528a7-738c-4cad-bac9-443e90d531ac
         config: {}
-        dataType: LONG
+        dataType: DOUBLE
         defaultValue: ""
         description: ""
-        name: west_sales
+        name: q2_west
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 358a9808-8ec8-45b5-b081-b584743ff1f6
+          stepCounter: 5ec528a7-738c-4cad-bac9-443e90d531ac
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: q1_west
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: ba4f12e2-0b32-4c81-9d21-1bfe67b8f6b9
+          stepCounter: 5ec528a7-738c-4cad-bac9-443e90d531ac
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: q2_east
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
@@ -102,9 +126,9 @@ operation:
             nodeName: yearly_sales
         join:
           joinCondition: FROM {{ ref('SOURCE', 'yearly_sales') }} `yearly_sales`
-        name: pvt_yearly_sales_region
+        name: pvt_yearly_sales_qu_region
         noLinkRefs: []
-  name: pvt_yearly_sales_region
+  name: pvt_yearly_sales_qu_region
   overrideSQL: false
   schema: ""
   sqlType: "468"

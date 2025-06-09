@@ -48,7 +48,7 @@ does not permit copying or modification for any other purpose.
                {%endif%}
 
          {% set source = desiredState.sources[0] %}
-         {%- set ns = namespace(keycol = "",pcolumn = [],saggfunctions=[],mggfunctions=[],funcdesc='',filcolval =[],cnt =1,i=0,exclclause =[],fexclclause ="",alfilcol =[],filclause="") %}
+         {%- set ns = namespace(keycol = "",pcolumn = [],saggfunctions=[],mggfunctions=[],funcdesc='',filcolval =[],cnt =1,i=0,exclclause =[],fexclclause ="",alfilcol =[],filclause="",pfuncollist="") %}
 
 
      {# Infer Pivot true #}
@@ -61,35 +61,40 @@ does not permit copying or modification for any other purpose.
                   {%endif%}
                   {%set ns.filcolval = desiredState.config.filValueColumn.get('items') | map(attribute='Colvol1')|list %}
                   {%set ns.alfilcol = desiredState.config.filValueColumn.get('items') | map(attribute='alcolvol1')|list %}
+                  {% set ns.saggfunctions = desiredState.config.tabValueColumn.get('items') | map(attribute='funcname') | list%}
       {%else%}
-			         {%set ns.keycol = desiredState.config.tabKeyColumn.get('items') | map(attribute='keyColTextBox') | list%}
+			      {%set ns.keycol = desiredState.config.tabKeyColumn.get('items') | map(attribute='keyColTextBox') | list%}
                   {%set ns.pcolumn = desiredState.config.tabValueColumn.get('items') | map(attribute='valColTextBox')|list%}
       {%endif%}
 
       {#Filter clause addition#}
-
+     {%if desiredState.config.inferPivot == true %}
       {%for col in ns.filcolval%}
-           {%set ns.filclause = ns.filclause + col + ' AS '+ ns.alfilcol[loop.index0] %}
+           {%set ns.filclause = ns.filclause + '('+ col + ')'+ ' AS '+ ns.alfilcol[loop.index0]  %}
            {%if not loop.last%}{%set ns.filclause = ns.filclause + ',' %}{%endif%}
       {%endfor%}
+
+      {%for cols in  ns.pcolumn%}
+            {%set ns.pfuncollist = ns.pfuncollist + ns.saggfunctions[loop.index0] + '(' + cols +')' + ns.saggfunctions[loop.index0]~'_'~ cols %}
+            {%if not loop.last%}{%set ns.pfuncollist = ns.pfuncollist + ','%}{%endif%}
+      {%endfor%}
+      {%endif%}
          
    {%if desiredState.config.inferPivot == true or desiredState.node.materializationType == 'view' %}
-        {% set ns.saggfunctions = desiredState.config.tabValueColumn.get('items') | map(attribute='funcname') | list%}
+        
          
          
         {{ stage('Create Pivot '+ desiredState.node.materializationType) }}
 
             CREATE OR REPLACE {{desiredState.node.materializationType}} {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
               AS
-             ( {%for func in ns.saggfunctions%}
+             (
                 SELECT * FROM (
                 SELECT  *    
                  {{ source.join }} 
-              PIVOT({{func}}({{ns.pcolumn|first}}) FOR ({{  ns.keycol | join(",") }}) IN ( 
+              PIVOT({{ns.pfuncollist}} FOR ({{  ns.keycol | join(",") }}) IN ( 
                     {{ns.filclause}})
                 ) 
-                {%- if not loop.last -%} UNION {% endif %}
-                {%endfor%}
                 ))
         {%elif desiredState.config.inferPivot == false and desiredState.node.materializationType != 'view' %}     
       

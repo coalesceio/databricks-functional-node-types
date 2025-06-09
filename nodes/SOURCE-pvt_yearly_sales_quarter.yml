@@ -1,20 +1,25 @@
 fileVersion: 1
-id: ebedc6f7-3483-4cce-82fb-21b22fd45a85
+id: 06d5fe7a-241c-4e0e-877b-133a79324a5e
 name: pvt_yearly_sales_quarter
 operation:
   config:
-    Colvol1: 1,2
     filValueColumn:
       items:
         - Colvol1: null
           alcolvol1: null
-    inferPivot: false
+    inferPivot: true
     tabKeyColumn:
       items:
-        - keyColTextBox: quarter
+        - keyColDropdown:
+            columnCounter: 80432cd0-65bc-4a7e-829d-e0a02eece69c
+            stepCounter: 06d5fe7a-241c-4e0e-877b-133a79324a5e
+          keyColTextBox: quarter
     tabValueColumn:
       items:
         - funcname: AVG
+          valColDropdown:
+            columnCounter: ad8b8f06-7ddd-4a9e-b833-5d1b98086df8
+            stepCounter: 06d5fe7a-241c-4e0e-877b-133a79324a5e
           valColTextBox: sales
     testsEnabled: false
     trunc: true
@@ -29,8 +34,8 @@ operation:
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: e3e73b01-712b-401f-8c32-adb09a5ea5da
-          stepCounter: ebedc6f7-3483-4cce-82fb-21b22fd45a85
+          columnCounter: c3078bb0-c6e1-44c8-b914-8d54f826821f
+          stepCounter: 06d5fe7a-241c-4e0e-877b-133a79324a5e
         config: {}
         dataType: INT
         description: ""
@@ -43,8 +48,22 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 66dbdfb9-9ed1-4f35-aa30-d1a2f3d7d0c1
-          stepCounter: ebedc6f7-3483-4cce-82fb-21b22fd45a85
+          columnCounter: 80432cd0-65bc-4a7e-829d-e0a02eece69c
+          stepCounter: 06d5fe7a-241c-4e0e-877b-133a79324a5e
+        config: {}
+        dataType: INT
+        description: ""
+        name: quarter
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 5a65b842-e8bd-47c7-a506-3ab20a446a23
+                stepCounter: 97bddd39-0d50-4a2e-a4f2-eff6723a0ea9
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 8cdaea08-df1e-4ec5-96b9-1cc210792383
+          stepCounter: 06d5fe7a-241c-4e0e-877b-133a79324a5e
         config: {}
         dataType: STRING
         description: ""
@@ -55,40 +74,20 @@ operation:
               - columnCounter: e1b54ff6-65ae-4b66-b134-7a8478e0f4f6
                 stepCounter: 97bddd39-0d50-4a2e-a4f2-eff6723a0ea9
             transform: ""
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
+      - appliedColumnTests: {}
         columnReference:
-          columnCounter: 76d7ce08-414b-4269-a88e-a297e0d6b4a6
-          stepCounter: ebedc6f7-3483-4cce-82fb-21b22fd45a85
+          columnCounter: ad8b8f06-7ddd-4a9e-b833-5d1b98086df8
+          stepCounter: 06d5fe7a-241c-4e0e-877b-133a79324a5e
         config: {}
-        dataType: DOUBLE
-        defaultValue: ""
+        dataType: INT
         description: ""
-        name: "1"
-        nullable: true
+        name: sales
+        nullable: false
         sourceColumnReferences:
-          - columnReferences: []
+          - columnReferences:
+              - columnCounter: d1c5d7aa-ea2e-4850-b6c7-f084c89aa462
+                stepCounter: 97bddd39-0d50-4a2e-a4f2-eff6723a0ea9
             transform: ""
-        transform: ""
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: b455719c-8e3d-4a65-9d9b-ea821ed32acf
-          stepCounter: ebedc6f7-3483-4cce-82fb-21b22fd45a85
-        config: {}
-        dataType: DOUBLE
-        defaultValue: ""
-        description: ""
-        name: "2"
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: ""
-        transform: ""
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:

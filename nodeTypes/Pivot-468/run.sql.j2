@@ -34,7 +34,7 @@ does not permit copying or modification for any other purpose.
 {% if node.materializationType == 'table' or node.materializationType == 'transient table'  %}
 
   {% set source = sources[0] %}
-                {%- set ns = namespace(keycol = "",pcolumn = [],saggfunctions=[],mggfunctions=[],funcdesc='',filcolval =[],cnt =1,i=0,exclclause =[],fexclclause ="",alfilcol =[],filclause="") %}
+                {%- set ns = namespace(keycol = "",pcolumn = [],saggfunctions=[],mggfunctions=[],funcdesc='',filcolval =[],cnt =1,i=0,exclclause =[],fexclclause ="",alfilcol =[],filclause="",pfuncollist="") %}
 
 
      {# Infer Pivot true #}
@@ -54,10 +54,12 @@ does not permit copying or modification for any other purpose.
                   {%set ns.alfilcol = config.filValueColumn.get('items') | map(attribute='alcolvol1')|list %}
       {%endif%}
 
-      {#Filter clause addition#}
+    
+       {% set ns.saggfunctions = config.tabValueColumn.get('items') | map(attribute='funcname') | list%}
+         {#Filter clause addition#}
 
       {%for col in ns.filcolval%}
-           {%set ns.filclause = ns.filclause + col + ' AS '+ ns.alfilcol[loop.index0] %}
+           {%set ns.filclause = ns.filclause + '('+ col + ')'+ ' AS '+ ns.alfilcol[loop.index0] %}
            {%if not loop.last%}{%set ns.filclause = ns.filclause + ',' %}{%endif%}
       {%endfor%}
        
@@ -66,22 +68,22 @@ does not permit copying or modification for any other purpose.
 			TRUNCATE TABLE  {{ ref_no_link(node.location.name, node.name) }}
      {%endif%}
 
-      
+       {%for cols in  ns.pcolumn%}
+            {%set ns.pfuncollist = ns.pfuncollist + ns.saggfunctions[loop.index0] + '(' + cols +')' + ns.saggfunctions[loop.index0]~'_'~ cols %}
+            {%if not loop.last%}{%set ns.pfuncollist = ns.pfuncollist + ','%}{%endif%}
+      {%endfor%}
 
-             {% set ns.saggfunctions = config.tabValueColumn.get('items') | map(attribute='funcname') | list%}
          
         {{ stage('Insert data into Pivot table') }}
 
             INSERT INTO  {{ ref_no_link(node.location.name, node.name) }}
-             ( {%for func in ns.saggfunctions%}
+             ( 
                 SELECT * FROM (
                 SELECT  *    
                  {{ source.join }} 
-                    PIVOT({{func}}({{ns.pcolumn|first}}) FOR ({{  ns.keycol | join(",") }}) IN ( 
+                    PIVOT({{ns.pfuncollist}} FOR ({{  ns.keycol | join(",") }}) IN ( 
                     {{ns.filclause}})
                 ) 
-                {%- if not loop.last -%} UNION {% endif %}
-                {%endfor%}
                 ) )
           
 {%endif%}
