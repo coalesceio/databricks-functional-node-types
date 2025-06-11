@@ -43,7 +43,7 @@ metadata:
         default: false
       
       - type: tabular
-        displayName: 'Pivot Column-(Cannot add multiple pivot columns)'
+        displayName: 'Pivot Column'
         attributeName: tabKeyColumn
         isRequired: true
         columns:

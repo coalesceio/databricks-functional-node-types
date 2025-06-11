@@ -1,38 +1,29 @@
 fileVersion: 1
-id: 5d881854-18ad-419b-aa35-ad61b28760f7
-name: pvt_student_performance
+id: 83e63b8a-1e4b-49a7-8a39-02cf9124b216
+name: pvt_student_performance1
 operation:
   config:
-    Colvol1: "'Math'"
-    aggfunc:
-      items:
-        - {}
-    aggfunc1:
-      items:
-        - funcname1: AVG
-    defaultval: ""
-    defvalue: false
-    excolval: false
-    exlcol:
-      items:
-        - {}
     filValueColumn:
       items:
-        - Colvol1: "'Math'"
-          alcolvol1: Math
-        - Colvol1: "'English'"
-          alcolvol1: English
+        - Colvol1: "'Math','Q1'"
+          alcolvol1: Q1_Math
+        - Colvol1: "'English','Q1'"
+          alcolvol1: Q1_English
+        - Colvol1: "'Math','Q2'"
+          alcolvol1: Q2_Math
+        - Colvol1: "'English','Q2'"
+          alcolvol1: Q2_English
     inferPivot: false
-    samKeyColval: false
-    sincol: true
-    subqueryval1: ""
     tabKeyColumn:
       items:
-        - keyColTextBox: SUBJECT
+        - keyColTextBox: term
+        - keyColTextBox: subject
     tabValueColumn:
       items:
+        - funcname: SUM
+          valColTextBox: score
         - funcname: AVG
-          valColTextBox: SCORE
+          valColTextBox: score
     testsEnabled: false
     trunc: true
   database: ""
@@ -46,8 +37,8 @@ operation:
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: f713a21a-0ebd-45cf-8341-d6013b19fa93
-          stepCounter: 5d881854-18ad-419b-aa35-ad61b28760f7
+          columnCounter: d03b2535-5527-4077-9070-265e51819eab
+          stepCounter: 83e63b8a-1e4b-49a7-8a39-02cf9124b216
         config: {}
         dataType: INT
         description: ""
@@ -58,32 +49,18 @@ operation:
               - columnCounter: 08b5bee1-aeb4-472a-8b68-cc3dcb9f423d
                 stepCounter: b4c0c79f-b2f6-447c-9cb4-0250d5b04f3a
             transform: ""
-      - appliedColumnTests: {}
-        columnReference:
-          columnCounter: 51e72cf5-099e-41e5-86d1-f47132cf8ab6
-          stepCounter: 5d881854-18ad-419b-aa35-ad61b28760f7
-        config: {}
-        dataType: STRING
-        description: ""
-        name: TERM
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences:
-              - columnCounter: 10b1e2c3-cb8a-4412-b72e-b0638ffa8243
-                stepCounter: b4c0c79f-b2f6-447c-9cb4-0250d5b04f3a
-            transform: ""
       - acceptedValues:
           strictMatch: true
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: c2f3aa82-c31d-47d7-9a82-ffcbd177a9eb
-          stepCounter: 5d881854-18ad-419b-aa35-ad61b28760f7
+          columnCounter: ff8c8637-0cd5-4395-a7c6-ded04f67ed43
+          stepCounter: 83e63b8a-1e4b-49a7-8a39-02cf9124b216
         config: {}
         dataType: DOUBLE
         defaultValue: ""
         description: ""
-        name: Math
+        name: Q1_Math
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
@@ -94,13 +71,47 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: ac5ce532-a8de-49c8-8eb8-88e65481eef4
-          stepCounter: 5d881854-18ad-419b-aa35-ad61b28760f7
+          columnCounter: a04e6ae6-3b2d-4e46-99f1-e10bf11e6048
+          stepCounter: 83e63b8a-1e4b-49a7-8a39-02cf9124b216
         config: {}
         dataType: DOUBLE
         defaultValue: ""
         description: ""
-        name: English
+        name: Q1_English
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 2a8c3a0f-2714-4892-b7c2-68ad0110cf8a
+          stepCounter: 83e63b8a-1e4b-49a7-8a39-02cf9124b216
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: Q2_Math
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 72673ccd-9bc8-4978-983d-167178646765
+          stepCounter: 83e63b8a-1e4b-49a7-8a39-02cf9124b216
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: Q2_English
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
@@ -117,9 +128,9 @@ operation:
             nodeName: student_performance
         join:
           joinCondition: FROM {{ ref('SOURCE', 'student_performance') }} `student_performance`
-        name: pvt_student_performance
+        name: pvt_student_performance1
         noLinkRefs: []
-  name: pvt_student_performance
+  name: pvt_student_performance1
   overrideSQL: false
   schema: ""
   sqlType: "468"

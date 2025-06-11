@@ -81,8 +81,7 @@ does not permit copying or modification for any other purpose.
       {%endif%}
          
    {%if desiredState.config.inferPivot == true or desiredState.node.materializationType == 'view' %}
-        
-         
+           
          
         {{ stage('Create Pivot '+ desiredState.node.materializationType) }}
 

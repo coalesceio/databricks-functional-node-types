@@ -82,11 +82,10 @@ does not permit copying or modification for any other purpose.
                 SELECT  *    
                  {{ source.join }} 
                     PIVOT({{ns.pfuncollist}} FOR ({{  ns.keycol | join(",") }}) IN ( 
-                    {{ns.filclause}})
-                ) 
+                    {{ns.filclause}})) 
                 ) )
           
-{%endif%}
+              {%endif%}
 
 {# == To run data quality tests after data insertion == #}
 
