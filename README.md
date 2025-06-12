@@ -419,16 +419,20 @@ This is executed in below stage:
 
 ### Date Dimension Code
 
-| **Component** | **Link** |
-|--------------|-----------|
 | **Node definition** | [definition.yml](https://github.com/coalesceio/databricks-functional-node-types/blob/main/nodeTypes/DateDimension-461/definition.yml) |
 | **Create Template** | [create.sql.j2](https://github.com/coalesceio/databricks-functional-node-types/blob/main/nodeTypes/DateDimension-461/create.sql.j2)|
 | **Run Template** | [run.sql.j2](https://github.com/coalesceio/databricks-functional-node-types/blob/main/nodeTypes/DateDimension-461/run.sql.j2) |
 
 ### Unpivot Code
 
-| **Component** | **Link** |
-|--------------|-----------|
 | **Node definition** | [definition.yml](https://github.com/coalesceio/databricks-functional-node-types/blob/main/nodeTypes/Unpivot-478/definition.yml) |
 | **Create Template** | [create.sql.j2](https://github.com/coalesceio/databricks-functional-node-types/blob/main/nodeTypes/Unpivot-478/create.sql.j2)|
 | **Run Template** | [run.sql.j2](https://github.com/coalesceio/databricks-functional-node-types/blob/main/nodeTypes/Unpivot-478/run.sql.j2) |
+
+### Pivot Code
+
+| **Node definition** | [definition.yml](https://github.com/coalesceio/databricks-functional-node-types/blob/main/nodeTypes/Pivot-468/definition.yml) |
+| **Create Template** | [create.sql.j2](https://github.com/coalesceio/databricks-functional-node-types/blob/main/nodeTypes/Pivot-468/create.sql.j2)|
+| **Run Template** | [run.sql.j2](https://github.com/coalesceio/databricks-functional-node-types/blob/main/nodeTypes/Pivot-468/run.sql.j2) |
+
+
