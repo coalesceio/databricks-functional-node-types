@@ -4,6 +4,7 @@ The Coalesce Functional Node Types Package includes:
 
 * [Date Dimension](#date-dimension)
 * [Unpivot](#Unpivot)
+* [Pivot](#Pivot)
 * [Code](#code)
 
 ---
