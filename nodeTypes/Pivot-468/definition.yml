@@ -94,11 +94,11 @@ metadata:
         isRequired: true
         columns:
 
-        - displayName: Filter Column Values(comma separated list of column values-Ex 'Q1','Q2')
+        - displayName: Filter Column Values(comma separated list of column values-Ex 1,'North')
           type: textBox
           attributeName: Colvol1
 
-        - displayName: Alias for Filter Column Values(comma separated list of column values-Ex 'Q1','Q2')
+        - displayName: Alias for Filter Column Values(Ex Quarter_North)
           type: textBox
           attributeName: alcolvol1
 

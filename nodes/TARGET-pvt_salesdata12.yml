@@ -1,0 +1,124 @@
+fileVersion: 1
+id: 63ef68f4-14e2-4ad9-8ddf-22b85702bb37
+name: pvt_salesdata12
+operation:
+  config:
+    filValueColumn:
+      items:
+        - Colvol1: "'North'"
+          alcolvol1: "N"
+        - Colvol1: "'South'"
+          alcolvol1: S
+        - Colvol1: "'East'"
+          alcolvol1: E
+    inferPivot: false
+    tabKeyColumn:
+      items:
+        - keyColTextBox: region
+    tabValueColumn:
+      items:
+        - funcname: AVG
+          valColTextBox: revenue
+        - funcname: SUM
+          valColTextBox: revenue
+    testsEnabled: false
+    trunc: true
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: TARGET
+  materializationType: table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: c12d89c1-6c42-4714-9d31-506ea2f3b370
+          stepCounter: 63ef68f4-14e2-4ad9-8ddf-22b85702bb37
+        config: {}
+        dataType: STRING
+        description: ""
+        name: region
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: daaf8894-45ef-4082-8d09-ded46db3689d
+                stepCounter: f8785ae2-cff3-4656-9c47-920dae451d8a
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 155ed4bf-044f-47ce-a6c5-99ce1f29aabe
+          stepCounter: 63ef68f4-14e2-4ad9-8ddf-22b85702bb37
+        config: {}
+        dataType: STRING
+        description: ""
+        name: quarter
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: eff01db2-998c-433f-b71c-584b250c460f
+                stepCounter: f8785ae2-cff3-4656-9c47-920dae451d8a
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 671b9db7-e9fd-4f8e-910a-c4709d83ea4a
+          stepCounter: 63ef68f4-14e2-4ad9-8ddf-22b85702bb37
+        config: {}
+        dataType: STRING
+        description: ""
+        name: product
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: def6cd10-05a9-42dd-9ff6-8fea4e8b2db9
+                stepCounter: f8785ae2-cff3-4656-9c47-920dae451d8a
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 2162b9ea-f8f6-4645-94cf-e59ddc96d6cb
+          stepCounter: 63ef68f4-14e2-4ad9-8ddf-22b85702bb37
+        config: {}
+        dataType: INT
+        description: ""
+        name: revenue
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: cc81d6b6-4186-4a19-affc-1cea15f12bb5
+                stepCounter: f8785ae2-cff3-4656-9c47-920dae451d8a
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: f18e6c85-6d9d-43b6-a2f0-c733fcdd6f61
+          stepCounter: 63ef68f4-14e2-4ad9-8ddf-22b85702bb37
+        config: {}
+        dataType: INT
+        description: ""
+        name: quantity
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: adb3c9b4-2bd6-497a-a680-82cae47119e5
+                stepCounter: f8785ae2-cff3-4656-9c47-920dae451d8a
+            transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases: {}
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: SOURCE
+            nodeName: salesdata
+        join:
+          joinCondition: FROM {{ ref('SOURCE', 'salesdata') }} `salesdata`
+        name: pvt_salesdata12
+        noLinkRefs: []
+  name: pvt_salesdata12
+  overrideSQL: false
+  schema: ""
+  sqlType: "468"
+  type: sql
+  version: 1
+type: Node
