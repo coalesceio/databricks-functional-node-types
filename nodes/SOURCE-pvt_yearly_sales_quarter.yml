@@ -7,19 +7,13 @@ operation:
       items:
         - Colvol1: null
           alcolvol1: null
-    inferPivot: true
+    inferPivot: false
     tabKeyColumn:
       items:
-        - keyColDropdown:
-            columnCounter: 80432cd0-65bc-4a7e-829d-e0a02eece69c
-            stepCounter: 06d5fe7a-241c-4e0e-877b-133a79324a5e
-          keyColTextBox: quarter
+        - keyColTextBox: quarter
     tabValueColumn:
       items:
         - funcname: AVG
-          valColDropdown:
-            columnCounter: ad8b8f06-7ddd-4a9e-b833-5d1b98086df8
-            stepCounter: 06d5fe7a-241c-4e0e-877b-133a79324a5e
           valColTextBox: sales
     testsEnabled: false
     trunc: true
@@ -48,20 +42,6 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 80432cd0-65bc-4a7e-829d-e0a02eece69c
-          stepCounter: 06d5fe7a-241c-4e0e-877b-133a79324a5e
-        config: {}
-        dataType: INT
-        description: ""
-        name: quarter
-        nullable: false
-        sourceColumnReferences:
-          - columnReferences:
-              - columnCounter: 5a65b842-e8bd-47c7-a506-3ab20a446a23
-                stepCounter: 97bddd39-0d50-4a2e-a4f2-eff6723a0ea9
-            transform: ""
-      - appliedColumnTests: {}
-        columnReference:
           columnCounter: 8cdaea08-df1e-4ec5-96b9-1cc210792383
           stepCounter: 06d5fe7a-241c-4e0e-877b-133a79324a5e
         config: {}
@@ -74,20 +54,40 @@ operation:
               - columnCounter: e1b54ff6-65ae-4b66-b134-7a8478e0f4f6
                 stepCounter: 97bddd39-0d50-4a2e-a4f2-eff6723a0ea9
             transform: ""
-      - appliedColumnTests: {}
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
         columnReference:
-          columnCounter: ad8b8f06-7ddd-4a9e-b833-5d1b98086df8
+          columnCounter: 82a882a0-96db-42a1-86bf-6c34e08ff414
           stepCounter: 06d5fe7a-241c-4e0e-877b-133a79324a5e
         config: {}
-        dataType: INT
+        dataType: DOUBLE
+        defaultValue: ""
         description: ""
-        name: sales
-        nullable: false
+        name: "1"
+        nullable: true
         sourceColumnReferences:
-          - columnReferences:
-              - columnCounter: d1c5d7aa-ea2e-4850-b6c7-f084c89aa462
-                stepCounter: 97bddd39-0d50-4a2e-a4f2-eff6723a0ea9
+          - columnReferences: []
             transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: dd344a74-86ff-480a-a4d4-daa4e8b8d9bb
+          stepCounter: 06d5fe7a-241c-4e0e-877b-133a79324a5e
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: "2"
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
