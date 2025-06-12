@@ -330,9 +330,13 @@ Pivot has three configuration groups:
 * Add a Pivot node on top of source node
 * Add the pivot columns,value columns ,aggregation operation,filter column values and alias from config.Find below example for filter columns and alias
 * Single pivot column
+ 
   ![sin-pivot](https://github.com/user-attachments/assets/9d771a45-2793-4782-afd2-866c0d6c20fd)
+  
 * Multiple pivot columns
+  
   ![mul-pivot](https://github.com/user-attachments/assets/fb86f53b-3347-42d9-987c-8ddfa5ccb461)
+  
 * When you choose the pivot and value dropdown,ensure that the textbox alongside the dropdown is entered with Column name.This textBox information is required once the pivot table structure is synced into Coalesce.
 * The toggle 'Infer Structure of Pivot Data' is required to be true when the node is created for the first time.
 * Once the pivot table is created,the 'Re-Sync Columns' can be used to sync the structure of pivot table into Coalesce mapping grid.
