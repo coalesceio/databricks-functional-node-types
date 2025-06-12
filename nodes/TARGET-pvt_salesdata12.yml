@@ -34,20 +34,6 @@ operation:
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: c12d89c1-6c42-4714-9d31-506ea2f3b370
-          stepCounter: 63ef68f4-14e2-4ad9-8ddf-22b85702bb37
-        config: {}
-        dataType: STRING
-        description: ""
-        name: region
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences:
-              - columnCounter: daaf8894-45ef-4082-8d09-ded46db3689d
-                stepCounter: f8785ae2-cff3-4656-9c47-920dae451d8a
-            transform: ""
-      - appliedColumnTests: {}
-        columnReference:
           columnCounter: 155ed4bf-044f-47ce-a6c5-99ce1f29aabe
           stepCounter: 63ef68f4-14e2-4ad9-8ddf-22b85702bb37
         config: {}
@@ -76,20 +62,6 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 2162b9ea-f8f6-4645-94cf-e59ddc96d6cb
-          stepCounter: 63ef68f4-14e2-4ad9-8ddf-22b85702bb37
-        config: {}
-        dataType: INT
-        description: ""
-        name: revenue
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences:
-              - columnCounter: cc81d6b6-4186-4a19-affc-1cea15f12bb5
-                stepCounter: f8785ae2-cff3-4656-9c47-920dae451d8a
-            transform: ""
-      - appliedColumnTests: {}
-        columnReference:
           columnCounter: f18e6c85-6d9d-43b6-a2f0-c733fcdd6f61
           stepCounter: 63ef68f4-14e2-4ad9-8ddf-22b85702bb37
         config: {}
@@ -102,6 +74,108 @@ operation:
               - columnCounter: adb3c9b4-2bd6-497a-a680-82cae47119e5
                 stepCounter: f8785ae2-cff3-4656-9c47-920dae451d8a
             transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 57429dbe-36f2-4bca-bcc7-e3cf6e059515
+          stepCounter: 63ef68f4-14e2-4ad9-8ddf-22b85702bb37
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: N_AVG_revenue
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: a398f156-44e5-49dc-99b6-150bbb8e19ea
+          stepCounter: 63ef68f4-14e2-4ad9-8ddf-22b85702bb37
+        config: {}
+        dataType: LONG
+        defaultValue: ""
+        description: ""
+        name: N_SUM_revenue
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 451a1d4e-121a-4d94-9d6d-60d44449535b
+          stepCounter: 63ef68f4-14e2-4ad9-8ddf-22b85702bb37
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: S_AVG_revenue
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 2e461a76-ee65-410c-909c-d828154f4ab0
+          stepCounter: 63ef68f4-14e2-4ad9-8ddf-22b85702bb37
+        config: {}
+        dataType: LONG
+        defaultValue: ""
+        description: ""
+        name: S_SUM_revenue
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: cb2e0fc0-06b9-42f7-acf3-1b0e5885baa5
+          stepCounter: 63ef68f4-14e2-4ad9-8ddf-22b85702bb37
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: E_AVG_revenue
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: e46b8ea8-a206-40bd-be55-a0c5853bbbaf
+          stepCounter: 63ef68f4-14e2-4ad9-8ddf-22b85702bb37
+        config: {}
+        dataType: LONG
+        defaultValue: ""
+        description: ""
+        name: E_SUM_revenue
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
