@@ -109,6 +109,7 @@ does not permit copying or modification for any other purpose.
                     {%- if col.description | length > 0 %} COMMENT '{{ col.description | escape }}'{% endif %}
                     {%- if not loop.last -%}, {% endif %}
                 {% endfor %}
+                TBLPROPERTIES('delta.columnMapping.mode' = 'name')
                )
               {%- if desiredState.node.description | length > 0 %} COMMENT = '{{ desiredState.node.description | escape }}'{% endif %}
            {% endif %}
