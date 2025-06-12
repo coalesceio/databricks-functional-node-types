@@ -1,0 +1,112 @@
+fileVersion: 1
+id: 06d5fe7a-241c-4e0e-877b-133a79324a5e
+name: pvt_yearly_sales_quarter
+operation:
+  config:
+    filValueColumn:
+      items:
+        - Colvol1: "1"
+          alcolvol1: Q1
+        - Colvol1: "2"
+          alcolvol1: Q2
+    inferPivot: false
+    tabKeyColumn:
+      items:
+        - keyColTextBox: quarter
+    tabValueColumn:
+      items:
+        - funcname: AVG
+          valColTextBox: sales
+    testsEnabled: false
+    trunc: true
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: SOURCE
+  materializationType: table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: c3078bb0-c6e1-44c8-b914-8d54f826821f
+          stepCounter: 06d5fe7a-241c-4e0e-877b-133a79324a5e
+        config: {}
+        dataType: INT
+        description: ""
+        name: year
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 3f4800e8-b5a3-4905-a2a6-ea07e2438d2c
+                stepCounter: 97bddd39-0d50-4a2e-a4f2-eff6723a0ea9
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 8cdaea08-df1e-4ec5-96b9-1cc210792383
+          stepCounter: 06d5fe7a-241c-4e0e-877b-133a79324a5e
+        config: {}
+        dataType: STRING
+        description: ""
+        name: region
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: e1b54ff6-65ae-4b66-b134-7a8478e0f4f6
+                stepCounter: 97bddd39-0d50-4a2e-a4f2-eff6723a0ea9
+            transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 82a882a0-96db-42a1-86bf-6c34e08ff414
+          stepCounter: 06d5fe7a-241c-4e0e-877b-133a79324a5e
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: "1"
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: dd344a74-86ff-480a-a4d4-daa4e8b8d9bb
+          stepCounter: 06d5fe7a-241c-4e0e-877b-133a79324a5e
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: "2"
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases: {}
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: SOURCE
+            nodeName: yearly_sales
+        join:
+          joinCondition: FROM {{ ref('SOURCE', 'yearly_sales') }} `yearly_sales`
+        name: pvt_yearly_sales_quarter
+        noLinkRefs: []
+  name: pvt_yearly_sales_quarter
+  overrideSQL: false
+  schema: ""
+  sqlType: "468"
+  type: sql
+  version: 1
+type: Node

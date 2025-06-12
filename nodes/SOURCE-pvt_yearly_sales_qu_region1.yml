@@ -1,0 +1,137 @@
+fileVersion: 1
+id: 0ec5bb22-1728-4429-96bb-69bc4b159e57
+name: pvt_yearly_sales_qu_region1
+operation:
+  config:
+    filValueColumn:
+      items:
+        - Colvol1: 1,'east'
+          alcolvol1: q1_east
+        - Colvol1: 2,'west'
+          alcolvol1: q2_west
+        - Colvol1: 1,'west'
+          alcolvol1: q1_west
+        - Colvol1: 2,'east'
+          alcolvol1: q2_east
+    inferPivot: false
+    tabKeyColumn:
+      items:
+        - keyColTextBox: quarter
+        - keyColTextBox: region
+    tabValueColumn:
+      items:
+        - funcname: AVG
+          valColTextBox: sales
+    testsEnabled: false
+    trunc: true
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: SOURCE
+  materializationType: table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 9b563b2d-a38f-40bf-8836-80653c38c3a9
+          stepCounter: 0ec5bb22-1728-4429-96bb-69bc4b159e57
+        config: {}
+        dataType: INT
+        description: ""
+        name: year
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 3f4800e8-b5a3-4905-a2a6-ea07e2438d2c
+                stepCounter: 97bddd39-0d50-4a2e-a4f2-eff6723a0ea9
+            transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: e9fda404-56c3-4987-a7c7-bdaed067c04b
+          stepCounter: 0ec5bb22-1728-4429-96bb-69bc4b159e57
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: q1_east
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: bb3f46a0-c8c9-4b71-991d-fd8fd87c178e
+          stepCounter: 0ec5bb22-1728-4429-96bb-69bc4b159e57
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: q2_west
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: cb921488-7c8e-4346-a741-17c152b07fa9
+          stepCounter: 0ec5bb22-1728-4429-96bb-69bc4b159e57
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: q1_west
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: a857df13-9b9d-48bf-94e1-3827e9690030
+          stepCounter: 0ec5bb22-1728-4429-96bb-69bc4b159e57
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: q2_east
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases: {}
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: SOURCE
+            nodeName: yearly_sales
+        join:
+          joinCondition: FROM {{ ref('SOURCE', 'yearly_sales') }} `yearly_sales`
+        name: pvt_yearly_sales_qu_region1
+        noLinkRefs: []
+  name: pvt_yearly_sales_qu_region1
+  overrideSQL: false
+  schema: ""
+  sqlType: "468"
+  type: sql
+  version: 1
+type: Node

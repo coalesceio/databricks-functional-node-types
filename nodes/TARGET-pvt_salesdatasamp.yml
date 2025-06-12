@@ -1,0 +1,145 @@
+fileVersion: 1
+id: db0f2027-5fc6-4ef1-9069-94762a412ddf
+name: pvt_salesdatasamp
+operation:
+  config:
+    filValueColumn:
+      items:
+        - Colvol1: "'North'"
+          alcolvol1: "N"
+        - Colvol1: "'South'"
+          alcolvol1: S
+        - Colvol1: "'East'"
+          alcolvol1: E
+    inferPivot: false
+    tabKeyColumn:
+      items:
+        - keyColTextBox: region
+    tabValueColumn:
+      items:
+        - funcname: AVG
+          valColTextBox: revenue
+    testsEnabled: false
+    trunc: true
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: TARGET
+  materializationType: table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 3bdf77c1-c5a3-469e-835e-16ac36077dbb
+          stepCounter: db0f2027-5fc6-4ef1-9069-94762a412ddf
+        config: {}
+        dataType: STRING
+        description: ""
+        name: quarter
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: eff01db2-998c-433f-b71c-584b250c460f
+                stepCounter: f8785ae2-cff3-4656-9c47-920dae451d8a
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 1f965963-2b5f-4a80-9f4d-d39552d029b5
+          stepCounter: db0f2027-5fc6-4ef1-9069-94762a412ddf
+        config: {}
+        dataType: STRING
+        description: ""
+        name: product
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: def6cd10-05a9-42dd-9ff6-8fea4e8b2db9
+                stepCounter: f8785ae2-cff3-4656-9c47-920dae451d8a
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 7297b0c5-c98b-46fd-9dfc-e1e72e943067
+          stepCounter: db0f2027-5fc6-4ef1-9069-94762a412ddf
+        config: {}
+        dataType: INT
+        description: ""
+        name: quantity
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: adb3c9b4-2bd6-497a-a680-82cae47119e5
+                stepCounter: f8785ae2-cff3-4656-9c47-920dae451d8a
+            transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: c079a4ab-7aac-40c6-bc6b-bda64a85c5d4
+          stepCounter: db0f2027-5fc6-4ef1-9069-94762a412ddf
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: "N"
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 5bb79306-a744-40ff-8bdf-a37c4745d223
+          stepCounter: db0f2027-5fc6-4ef1-9069-94762a412ddf
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: S
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: f6ec5f9f-9e47-4ce8-ab85-3a640a3048e4
+          stepCounter: db0f2027-5fc6-4ef1-9069-94762a412ddf
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: E
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases: {}
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: SOURCE
+            nodeName: salesdata
+        join:
+          joinCondition: FROM {{ ref('SOURCE', 'salesdata') }} `salesdata`
+        name: pvt_salesdatasamp
+        noLinkRefs: []
+  name: pvt_salesdatasamp
+  overrideSQL: false
+  schema: ""
+  sqlType: "468"
+  type: sql
+  version: 1
+type: Node

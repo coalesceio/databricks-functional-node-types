@@ -1,0 +1,148 @@
+fileVersion: 1
+id: c6659c40-be92-4779-9a0c-186dd5471309
+name: pvt_salesdata_multi
+operation:
+  config:
+    filValueColumn:
+      items:
+        - Colvol1: "'Q1'"
+          alcolvol1: Quarter1
+        - Colvol1: "'Q2'"
+          alcolvol1: Quarter2
+    inferPivot: false
+    tabKeyColumn:
+      items:
+        - keyColTextBox: quarter
+    tabValueColumn:
+      items:
+        - funcname: AVG
+          valColTextBox: revenue
+        - funcname: MAX
+          valColTextBox: quantity
+    testsEnabled: false
+    trunc: true
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: SOURCE
+  materializationType: table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: becd50dc-e176-4f76-91cc-7a9481ffe806
+          stepCounter: c6659c40-be92-4779-9a0c-186dd5471309
+        config: {}
+        dataType: STRING
+        description: ""
+        name: region
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: daaf8894-45ef-4082-8d09-ded46db3689d
+                stepCounter: f8785ae2-cff3-4656-9c47-920dae451d8a
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: a78b09ce-f288-4aa1-9299-d8cc7333541f
+          stepCounter: c6659c40-be92-4779-9a0c-186dd5471309
+        config: {}
+        dataType: STRING
+        description: ""
+        name: product
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: def6cd10-05a9-42dd-9ff6-8fea4e8b2db9
+                stepCounter: f8785ae2-cff3-4656-9c47-920dae451d8a
+            transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 85701255-5170-4cf5-af9f-0844b519a1de
+          stepCounter: c6659c40-be92-4779-9a0c-186dd5471309
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: Quarter1_AVG_revenue
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 775eeadc-a15f-40b1-8880-9b9a180ee70d
+          stepCounter: c6659c40-be92-4779-9a0c-186dd5471309
+        config: {}
+        dataType: INT
+        defaultValue: ""
+        description: ""
+        name: Quarter1_MAX_quantity
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 8857f9d5-1ae5-4660-93d0-8d4a6625a9b7
+          stepCounter: c6659c40-be92-4779-9a0c-186dd5471309
+        config: {}
+        dataType: DOUBLE
+        defaultValue: ""
+        description: ""
+        name: Quarter2_AVG_revenue
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 0d21f75d-9e34-42fc-ac39-c0ee757c78dd
+          stepCounter: c6659c40-be92-4779-9a0c-186dd5471309
+        config: {}
+        dataType: INT
+        defaultValue: ""
+        description: ""
+        name: Quarter2_MAX_quantity
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases: {}
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: SOURCE
+            nodeName: salesdata
+        join:
+          joinCondition: FROM {{ ref('SOURCE', 'salesdata') }} `salesdata`
+        name: pvt_salesdata_multi
+        noLinkRefs: []
+  name: pvt_salesdata_multi
+  overrideSQL: false
+  schema: ""
+  sqlType: "468"
+  type: sql
+  version: 1
+type: Node
