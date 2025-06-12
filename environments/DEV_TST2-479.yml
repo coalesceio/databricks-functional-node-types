@@ -6,6 +6,6 @@ mappingDefinitions:
     schema: default
   TARGET:
     database: coalesce
-    schema: target_dep
+    schema: target_dev
 name: DEV_TST2
 type: Environment
