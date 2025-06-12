@@ -5,8 +5,10 @@ operation:
   config:
     filValueColumn:
       items:
-        - Colvol1: null
-          alcolvol1: null
+        - Colvol1: "1"
+          alcolvol1: Q1
+        - Colvol1: "2"
+          alcolvol1: Q2
     inferPivot: false
     tabKeyColumn:
       items:
