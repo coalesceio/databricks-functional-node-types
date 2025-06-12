@@ -4,6 +4,9 @@ mappingDefinitions:
   SOURCE:
     database: coalesce
     schema: default
+  SOURCE1:
+    database: coalesce
+    schema: sample_data
   TARGET:
     database: coalesce
     schema: target_dev

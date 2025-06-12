@@ -146,14 +146,15 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          orders: 586be5e3-f5de-4a5b-af1d-b8ebbfcfbd2f
         customSQL:
           customSQL: ""
         dependencies:
-          - locationName: SOURCE
+          - locationName: SOURCE1
             nodeName: orders
         join:
-          joinCondition: FROM {{ ref('SOURCE', 'orders') }} `orders`
+          joinCondition: FROM {{ ref('SOURCE1', 'orders') }} `orders`
         name: stg_orders
         noLinkRefs: []
   name: stg_orders

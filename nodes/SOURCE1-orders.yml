@@ -5,7 +5,7 @@ operation:
   database: ""
   deployEnabled: true
   description: ""
-  locationName: SOURCE
+  locationName: SOURCE1
   metadata:
     columns:
       - acceptedValues:
