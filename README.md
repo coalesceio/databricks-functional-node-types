@@ -71,16 +71,6 @@ You can create the node as:
 | **Enable tests** | Toggle: True/False<br/>Determines if tests are enabled |
 | **Override Create SQL** | Toggle: True/False<br/>**True**: View is created by overriding the SQL<br/>**False**: Nodetype defined create view SQL will execute |
 
-### Date Dimension Joins
-
-Join conditions and other clauses can be specified in the join space next to mapping of columns in the UI.
-
-![work_join](https://github.com/coalesceio/Coalesce-Base-Node-Types---Advanced-Deploy/assets/7216836/7acff10b-8845-4c44-851a-b7a0bc7eaf41)
-
-> 📘 **Specify Group by and Order by Clauses**
->
-> Best Practice is to specify group by and order by clauses in this space if you are not opting for the group by all and order by provided in OPTIONS config.
-
 ### Date Dimension Deployment
 
 #### Date Dimension Initial Deployment
@@ -279,6 +269,140 @@ If the nodes are redeployed with no changes compared to previous deployment,then
 ### Unpivot Deploy Undeployment
 
 If a Unpivot Node of materialization type table/view/transient table are deleted from a Unpivotspace, that Unpivotspace is committed to Git and that commit deployed to a higher level environment then the UnpivotTable in the target environment will be dropped.
+
+This is executed in below stage:
+
+| **Stage** | **Description** |
+|-----------|----------------|
+| **Drop table/view** | Removes the table or view from the environment |
+
+## Pivot
+
+Pivoting ia crucial feature of data transformation.The [Pivot node](https://learn.microsoft.com/en-us/azure/databricks/sql/language-manual/sql-ref-syntax-qry-select-pivot) in Coalesce transforms a table by turning the unique values from one column in the input expression into multiple columns and aggregating results where required on any remaining column values. This operation is specified in the `FROM` clause after the table name or subquery.  
+
+It is especially useful for converting narrow tables, such as one with columns for `empid`, `month`, and `sales`, 
+into wider tables, for example, `empid`, `jan_sales`, `feb_sales`, and `mar_sales`.
+
+### Pivot Node Configuration
+
+Pivot has three configuration groups: 
+
+* [Node Properties](#pivot-node-properties)
+* [General Options](#pivot-general-options)
+* [Pivot Options](#pivot-options)
+
+  ![pivot-node-config](https://github.com/user-attachments/assets/edd67d5d-7216-429a-a292-2fe4980d1a9e)
+
+#### Pivot Node Properties
+
+| **Property** | **Description** |
+|--------------|-----------------|
+| **Storage Location** | (Required) Storage Location where the Pivot Table will be created |
+| **Node Type** | (Required) Name of template used to create node objects |
+| **Description** | A description of the node's purpose |
+| **Deploy Enabled** | If TRUE the node will be deployed/redeployed when changes are detected<br/>If FALSE the node will not be deployed or will be dropped during redeployment |
+
+#### Pivot General Options
+
+![pivot-general](https://github.com/user-attachments/assets/5adfb637-3d5e-4401-8151-17bcbe17c884)
+
+| **Options** | **Description** |
+|-------------|-----------------|
+| **Create As** | Choose 'table', 'view' or 'transient table' |
+| **Truncate** | True/False toggle to enable or disable truncating the output columns |
+| **Enable tests** | Toggle: True/False<br/>Determines if tests are enabled |
+
+##### Pivot Options
+
+![pivot-options](https://github.com/user-attachments/assets/9e22a2a5-7e70-4c81-bb0a-ef599fcefa3e)
+
+| **Options** | **Description** |
+|-------------|-----------------|
+| **Infer structure of Pivot table** | Toggle: True/False<br/> True,it is the first run and the pivot table structure is yet to be determined.False,when the pivot table is created and generated columns have been Re-synced in Coalesce|
+| **Pivot column**|Pivot column(Dropdown) <br/> Pivot column(textbox)<br/> The column from the source table or subquery that will be rotated and turned into new columns.|
+| **Value Column**|-Value Column(Dropdown) <br/> -Value Column(textbox)<br/> Columns to which you want to apply aggregation.<br/>-Aggregate Functions<br/>Aggregation you want to apply, like AVG, COUNT, MAX, MIN, and SUM.|
+|**Filter Column Values(comma separated list of column values-Ex 1,'North')**|Specified list of column values for the pivot column.For instance if quarter and region as pivot columns,then we can specify column value as 1,'North'|
+|**Alias for Filter Column Values(Ex Quarter_North)**|Specify an alias for the combined value of pivot columns.For instance if quarter and region as pivot columns,then Quarter1_North can be an alias|
+
+### Pivot node Usage
+
+* Add a Pivot node on top of source node
+* Add the pivot columns,value columns ,aggregation operation,filter column values and alias from config.Find below example for filter columns and alias
+* Single pivot column
+  ![sin-pivot](https://github.com/user-attachments/assets/9d771a45-2793-4782-afd2-866c0d6c20fd)
+* Multiple pivot columns
+  ![mul-pivot](https://github.com/user-attachments/assets/fb86f53b-3347-42d9-987c-8ddfa5ccb461)
+* When you choose the pivot and value dropdown,ensure that the textbox alongside the dropdown is entered with Column name.This textBox information is required once the pivot table structure is synced into Coalesce.
+* The toggle 'Infer Structure of Pivot Data' is required to be true when the node is created for the first time.
+* Once the pivot table is created,the 'Re-Sync Columns' can be used to sync the structure of pivot table into Coalesce mapping grid.
+* After Re-sync,recreate the table with 'Infer Structure of Pivot Data' set to false
+* If the above works, it should be deployable as is. Deploy will simply take the columns and execute a create table.
+* Hit run to insert data into table keeping the 'Infer Structure of Pivot Data' set to false
+  
+### Pivot Deployment
+
+### Points to note for deployment
+* Create table with ‘Infer PIVOT structure’ toggle enabled
+* Re-Sync columns to the mapping grid
+* Deploy with ‘Infer PIVOT structure’ toggle set to false
+* Repeat the above steps if you see changes in column of table during redeployment.It is fine to skip for change in materialization type,change in target location or change in node name
+* Ensure the new columns added or dropped are part of the inferred PIVOT structure and not added/dropped directly in the mapping grid.The deployment will succeed but insert will fail
+> 📘 **Deployment**
+>
+> Ensure 'Infer Pivot structure' set to false before deployment
+
+#### Pivot Initial Deployment
+
+When deployed for the first time into an environment the Pivot node of materialization type table or view will execute the below stage:
+
+| **Stage** | **Description** |
+|-----------|----------------|
+| **Create Pivot Table** | This will execute a CREATE OR REPLACE statement and create a table in the target environment |
+| **Create Pivot View** | This will execute a CREATE OR REPLACE statement and create a view in the target environment |
+
+#### Pivot Redeployment
+
+After the Pivot node with materialization type table/view has been deployed for the first time into a target environment, subsequent deployments may result in either altering the Pivot Table or recreating the Pivot table.
+Pivot
+#### Altering the  Table and Transient Tables
+
+A few types of column or table changes will result in an ALTER statement to modify the Pivot Table in the target environment, whether these changes are made individually or all together:
+
+1. Changing table names
+2. Dropping existing columns
+3. Altering column data types
+4. Adding new columns
+
+The following stages are executed:
+
+| **Stage** | **Description** |
+|-----------|----------------|
+| **Rename Table/ Alter Column/ Delete Column/ Add Column/Edit table description** | Alter table statement is executed to perform the alter operation |
+
+#### Pivot Recreating the Views
+
+The subsequent deployment of Pivot node of materialization type view with changes in view definition, adding table description or renaming view results in deleting the existing view and recreating the view.
+
+The following stages are executed:
+
+| **Stage** | **Description** |
+|-----------|----------------|
+| **Create Pivot View** | Creates a new view with pivot definition |
+
+#### Pivot Drop and Recreate View/Table
+
+| **Change** | **Stages Executed** |
+|------------|-------------------|
+| **View to table** |  Drop view <br/> Create or Replace Pivot table/transient table |
+| **Table to View** |  Drop table/transient table<br/> Create Pivot view |
+
+### Redeployment with no changes 
+
+If the nodes are redeployed with no changes compared to previous deployment,then no stages are executed
+
+### Pivot Deploy Undeployment
+
+If a Pivot Node of materialization type table/view/transient table are deleted from a workspace, that workspace is committed to Git and that commit deployed to a higher level environment then the PivotTable in the target environment will be dropped.
 
 This is executed in below stage:
 
