@@ -116,68 +116,80 @@ metadata:
       description: "Year in the format YYYY"
       placement: beginning
       attributeName: isYear
+
     - displayName: 'MONTH'
       transform: 'MONTH({{ config.dateColumnName }})'
       dataType: SMALLINT
       description: "Month in the format MM"
       placement: beginning
       attributeName: isMonth
+
     - displayName: 'MONTH_NAME'
       transform: 'MONTHNAME({{ config.dateColumnName }})'
       dataType: CHAR(3)
       description: "Month in the format MMM"
       placement: beginning
       attributeName: isMonthName
+
     - displayName: 'DAY_OF_MONTH'
       transform: 'DAY({{ config.dateColumnName }})'
       dataType: SMALLINT
       description: "Day in the format DD"
       placement: beginning
       attributeName: isDayOfMonth
+
     - displayName: 'DAY_OF_WEEK'
       transform: 'DAYOFWEEK({{ config.dateColumnName }})'
       dataType: VARCHAR(9)
       description: "Day of the Week in format DD"
       placement: beginning
       attributeName: isDayOfWeek
+
     - displayName: 'DAY_NAME_OF_WEEK'
       transform: "DAYNAME({{ config.dateColumnName }})"
       dataType: VARCHAR(9)
       description: "Day of the Week in format DDD"
       placement: beginning
       attributeName: isDayNameOfWeek
+
     - displayName: 'WEEK_OF_YEAR'
       transform: 'WEEKOFYEAR({{ config.dateColumnName }})'
       dataType: SMALLINT
       description: "Week of the Year"
       placement: beginning
       attributeName: isWeekOfYear
+
     - displayName: 'DAY_OF_YEAR'
       transform: 'DAYOFYEAR({{ config.dateColumnName }})'
       dataType: SMALLINT
       description: "Day of the year"
       placement: beginning
       attributeName: isYearColumn
+      
     - displayName: 'QUARTER_NUMBER'
       transform: "QUARTER({{config.dateColumnName}})"
       dataType: SMALLINT
       description: "Quarter Number of the year (1-4)"
       placement: beginning
       attributeName: isQuarterNumber
+      
     - displayName: 'QUARTER'
       transform: "CAST(DATE_FORMAT({{config.dateColumnName}}, 'yyyy') || '0' || CAST(QUARTER({{config.dateColumnName}}) AS STRING) AS INT)"
+
       dataType: INT
       description: "Year and the Quarter number in the format YYYYQQ"
       placement: beginning
       attributeName: isQuarter
     - displayName: 'FLAG_WEEK_DAY'
-      transform: "CASE WHEN TO_CHAR({{config.dateColumnName }}, 'Dy') IN ('Sat','Sun') THEN 'N' ELSE 'Y' END"
+      transform: "CASE WHEN DAYNAME({{config.dateColumnName }}) IN ('Sat','Sun') THEN 'N' ELSE 'Y' END"
+
       dataType: VARCHAR(9)
       description: "Flag to check week day"
       placement: beginning
       attributeName: isFlagWeekDay
     - displayName: 'FLAG_WEEK_END'
-      transform: "CASE WHEN TO_CHAR({{config.dateColumnName }}, 'Dy') IN ('Sat','Sun') THEN 'Y' ELSE 'N' END"
+      transform: "CASE WHEN DAYNAME({{config.dateColumnName }}) IN ('Sat','Sun') THEN 'Y' ELSE 'N' END"
+
       dataType: VARCHAR(9)
       description: "Flag to check weekend"
       placement: beginning

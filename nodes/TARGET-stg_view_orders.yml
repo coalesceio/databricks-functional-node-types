@@ -363,12 +363,12 @@ operation:
           customSQL: ""
         dependencies:
           - locationName: TARGET
-            nodeName: dim_date_view
+            nodeName: dim_date_view123
           - locationName: TARGET
             nodeName: stg_orders
         join:
           joinCondition: |-
-            FROM {{ ref('TARGET', 'dim_date_view') }} `dim_date_view`
+            FROM {{ ref('TARGET', 'dim_date_view123') }} `dim_date_view`
             INNER JOIN {{ ref('TARGET', 'stg_orders') }} `stg_orders`
             ON `dim_date_view`.`DATE_KEY` = `stg_orders`.`o_orderdate`
         name: stg_view_orders
