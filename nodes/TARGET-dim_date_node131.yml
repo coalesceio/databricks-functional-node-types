@@ -5,10 +5,10 @@ operation:
   config:
     dateColumnName: "`DATE_COLUMN`"
     daysToGenerate: "2000"
-    insertZeroKey: false
+    insertZeroKey: true
     insertZeroKeyDate: 01-01-1900
     insertZeroKeyStr: NA
-    insertZeroKeySurrogateKey: 01-01-1900
+    insertZeroKeySurrogateKey: "0"
     postSQL: ""
     preSQL: ""
     startingDate: DATEADD(DAY, -365, CURRENT_DATE)

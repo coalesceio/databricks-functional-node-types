@@ -164,20 +164,24 @@ metadata:
       description: "Quarter Number of the year (1-4)"
       placement: beginning
       attributeName: isQuarterNumber
+      
     - displayName: 'QUARTER'
       transform: "CAST(DATE_FORMAT({{config.dateColumnName}}, 'yyyy') || '0' || CAST(QUARTER({{config.dateColumnName}}) AS STRING) AS INT)"
+
       dataType: INT
       description: "Year and the Quarter number in the format YYYYQQ"
       placement: beginning
       attributeName: isQuarter
     - displayName: 'FLAG_WEEK_DAY'
-      transform: "CASE WHEN TO_CHAR({{config.dateColumnName }}, 'Dy') IN ('Sat','Sun') THEN 'N' ELSE 'Y' END"
+      transform: "CASE WHEN DAYNAME({{config.dateColumnName }}) IN ('Sat','Sun') THEN 'N' ELSE 'Y' END"
+
       dataType: VARCHAR(9)
       description: "Flag to check week day"
       placement: beginning
       attributeName: isFlagWeekDay
     - displayName: 'FLAG_WEEK_END'
-      transform: "CASE WHEN TO_CHAR({{config.dateColumnName }}, 'Dy') IN ('Sat','Sun') THEN 'Y' ELSE 'N' END"
+      transform: "CASE WHEN DAYNAME({{config.dateColumnName }}) IN ('Sat','Sun') THEN 'Y' ELSE 'N' END"
+
       dataType: VARCHAR(9)
       description: "Flag to check weekend"
       placement: beginning
